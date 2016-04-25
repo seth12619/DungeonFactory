@@ -31,7 +31,7 @@ public class Game {
         {
             for (int j = 0; j < 5; j++)
             {
-                Entity temp = new Entity ('_');
+                Entity temp = new Entity ('-');
                 map[i][j] = temp;
             }
         }
@@ -46,7 +46,7 @@ public class Game {
         Point enemyLoc = new Point (1,3, map[1][3]);
         GoblinAI acting = new GoblinAI (important, enemyLoc);
         queue.add(new Executable(enemyLoc, acting));
-        Entity leave = new Entity('_');
+        Entity leave = new Entity('-');
         
         moveEntity( important, 0, 1, leave, map);
         print = getPrintable (map);
@@ -134,7 +134,7 @@ public class Game {
             System.out.println("ERROR. YOU TRIED MOVING IT OUT OF BOUNDS!");
         }
         
-        else if (map[newX][newY].getValue() != '_')
+        else if (map[newX][newY].getValue() != '-')
         {
             System.out.println("ERROR. YOU TRIED MOVING INTO ANOTHER THING!");
         }
