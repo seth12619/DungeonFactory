@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package game;
+package dungeonfactory;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author mnmkami
+ * @author mnmkami, seth, icon
  */
 
 public class Game {
