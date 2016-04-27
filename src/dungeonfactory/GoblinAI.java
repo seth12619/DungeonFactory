@@ -20,7 +20,7 @@ public class GoblinAI implements Behavior{
     
     @Override
     public void execute() {
-        System.out.println("I did a thing!");
+        System.out.println( me.getContent().getValue() + " did a thing!");
     }
     
 }
