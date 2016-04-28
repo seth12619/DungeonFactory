@@ -9,6 +9,8 @@ import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,7 +21,7 @@ import javax.swing.JPanel;
  * @author mnmkami, seth, icon
  */
 
-public class Game extends JFrame {
+public class Game extends JFrame implements Observer {
 
     /**
      * @param args the command line arguments
@@ -30,16 +32,27 @@ public class Game extends JFrame {
        
     }
     
+    int sizeVertical = 5;
+    int sizeHorizontal = 5;
+    
+    JPanel mapHUD = new JPanel();
+    ImageLoader loader = new ImageLoader();
+    
+    Entity [][] map = new Entity [sizeVertical][sizeHorizontal];
+    
+    
+    int rows = map.length;
+    int cols = map[0].length;
+    
     public Game() {
-        int sizeVertical = 5;
-        int sizeHorizontal = 5;
         
-         Helper help = new Helper();
         
-        Entity [][] map = new Entity [sizeVertical][sizeHorizontal];
+        Helper help = new Helper();
+        
+        
         ArrayList<Executable> queue = new ArrayList<>();
         
-        ImageLoader loader = new ImageLoader();
+       
         
         
         for (int i = 0; i < 5; i++)
@@ -66,9 +79,10 @@ public class Game extends JFrame {
         help.moveEntity( important, 0, 1, leave, map);
         print = help.getPrintable (map);
         help.printMap(print);
+        help.addObserver(this);
         
         JFrame thing = new JFrame();
-        JPanel mapHUD = new JPanel();
+        
         
         GridLayout mapGrid = new GridLayout(sizeVertical,sizeHorizontal);
         mapGrid.setHgap(0);
@@ -79,8 +93,7 @@ public class Game extends JFrame {
         thing.setLayout(new GridLayout(sizeVertical,sizeHorizontal));
         thing.setTitle("Dungeon Factory");
         
-                    int rows = map.length;
-                    int cols = map[0].length;
+                    
                     for (int i = 0; i < cols; i++){
                         for(int j = 0; j < rows; j++) {
                             //Where we fill up the gui grid
@@ -124,15 +137,7 @@ public class Game extends JFrame {
                     System.out.println("-------------------------------");
                     
                     help.printMap(print);
-                    mapHUD.removeAll();
-                    for (int i = 0; i < cols; i++){
-                        for(int j = 0; j < rows; j++) {
-                            ImageIcon fill = loader.getImage(map[i][j].getValue());
-                            mapHUD.add(new JLabel(fill));
-                        }  
-                       
-                    }
-                    mapHUD.revalidate();
+                   
                     
                     
                 }
@@ -141,6 +146,19 @@ public class Game extends JFrame {
         thing.setSize(625,625);
         thing.setVisible(true);
         thing.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        mapHUD.removeAll();
+                    for (int i = 0; i < cols; i++){
+                        for(int j = 0; j < rows; j++) {
+                            ImageIcon fill = loader.getImage(map[i][j].getValue());
+                            mapHUD.add(new JLabel(fill));
+                        }  
+                       
+                    }
+                    mapHUD.revalidate();
     }
 
 }
