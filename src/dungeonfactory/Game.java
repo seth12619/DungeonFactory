@@ -151,14 +151,13 @@ public class Game extends JFrame implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         mapHUD.removeAll();
-                    for (int i = 0; i < cols; i++){
-                        for(int j = 0; j < rows; j++) {
-                            ImageIcon fill = loader.getImage(map[i][j].getValue());
-                            mapHUD.add(new JLabel(fill));
-                        }  
-                       
-                    }
-                    mapHUD.revalidate();
+        for (int i = 0; i < cols; i++){
+            for(int j = 0; j < rows; j++) {
+                ImageIcon fill = loader.getImage(map[i][j].getValue());
+                 mapHUD.add(new JLabel(fill));
+            }  
+        }
+        mapHUD.revalidate();
     }
 
 }
