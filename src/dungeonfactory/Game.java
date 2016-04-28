@@ -5,28 +5,41 @@
  */
 package dungeonfactory;
 
+import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
  * @author mnmkami, seth, icon
  */
 
-public class Game {
+public class Game extends JFrame {
 
     /**
      * @param args the command line arguments
      */
     static char [][] print;
     public static void main(String[] args) {
+        Game start = new Game();
+       
+    }
+    
+    public Game() {
+        int sizeVertical = 5;
+        int sizeHorizontal = 5;
         
-        Helper help = new Helper();
+         Helper help = new Helper();
         
-        Entity [][] map = new Entity [5][5];
+        Entity [][] map = new Entity [sizeVertical][sizeHorizontal];
         ArrayList<Executable> queue = new ArrayList<>();
+        
+        ImageLoader loader = new ImageLoader();
         
         
         for (int i = 0; i < 5; i++)
@@ -55,6 +68,28 @@ public class Game {
         help.printMap(print);
         
         JFrame thing = new JFrame();
+        JPanel mapHUD = new JPanel();
+        
+        GridLayout mapGrid = new GridLayout(sizeVertical,sizeHorizontal);
+        mapGrid.setHgap(0);
+        mapGrid.setVgap(0);
+        mapHUD.setLayout(mapGrid);
+        
+        
+        thing.setLayout(new GridLayout(sizeVertical,sizeHorizontal));
+        thing.setTitle("Dungeon Factory");
+        
+                    int rows = map.length;
+                    int cols = map[0].length;
+                    for (int i = 0; i < cols; i++){
+                        for(int j = 0; j < rows; j++) {
+                            //Where we fill up the gui grid
+                            ImageIcon fill = loader.getImage(map[i][j].getValue());
+                            mapHUD.add(new JLabel(fill));
+                        }  
+                    }
+        
+        
         thing.addKeyListener(
             new KeyAdapter()
             {
@@ -89,9 +124,23 @@ public class Game {
                     System.out.println("-------------------------------");
                     
                     help.printMap(print);
+                    mapHUD.removeAll();
+                    for (int i = 0; i < cols; i++){
+                        for(int j = 0; j < rows; j++) {
+                            ImageIcon fill = loader.getImage(map[i][j].getValue());
+                            mapHUD.add(new JLabel(fill));
+                        }  
+                       
+                    }
+                    mapHUD.revalidate();
+                    
+                    
                 }
             });
+        thing.add(mapHUD);
+        thing.setSize(625,625);
         thing.setVisible(true);
+        thing.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
 }
