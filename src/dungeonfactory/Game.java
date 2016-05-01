@@ -5,7 +5,9 @@
  */
 package dungeonfactory;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.TextArea;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -88,9 +90,11 @@ public class Game extends JFrame implements Observer {
         mapGrid.setHgap(0);
         mapGrid.setVgap(0);
         mapHUD.setLayout(mapGrid);
+        mapHUD.setSize(400, 400);
+       
         
         
-        thing.setLayout(new GridLayout(sizeVertical,sizeHorizontal));
+        thing.setLayout(new BorderLayout());
         thing.setTitle("Dungeon Factory");
         
                     
@@ -142,7 +146,29 @@ public class Game extends JFrame implements Observer {
                     
                 }
             });
-        thing.add(mapHUD);
+        TextArea actions = new TextArea();
+        actions.setEditable(false);
+        actions.setEnabled(false);
+        JPanel text = new JPanel();
+        text.add(actions);
+        text.setEnabled(false);
+        
+        JPanel padLeft = new JPanel();
+        padLeft.setEnabled(false);
+        
+        JPanel padRight = new JPanel();
+        padRight.setEnabled(false);
+        
+        JPanel padNorth = new JPanel();
+        padNorth.setEnabled(false);
+        
+        
+        
+        thing.add(mapHUD, BorderLayout.CENTER);
+        thing.add(text, BorderLayout.SOUTH);
+        thing.add(padLeft, BorderLayout.EAST);
+        thing.add(padRight, BorderLayout.WEST);
+        thing.add(padNorth, BorderLayout.NORTH);
         thing.setSize(625,625);
         thing.setVisible(true);
         thing.setDefaultCloseOperation(EXIT_ON_CLOSE);
