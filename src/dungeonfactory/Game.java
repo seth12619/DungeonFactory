@@ -49,7 +49,7 @@ public class Game extends JFrame implements Observer {
     public Game() {
         
         
-        Helper help = new Helper();
+        //Helper help = new Helper();
         
         
         ArrayList<Executable> queue = new ArrayList<>();
@@ -68,16 +68,17 @@ public class Game extends JFrame implements Observer {
         
         map [3][1] = new Entity ('C');
         map [1][3] = new Entity ('E');
-        print = help.getPrintable (map);
-        help.printMap(print);
+        print = Helper.getPrintable (map);
+        Helper.printMap(print);
         System.out.println("-------------------------------");
         Entity character = map[3][1];
         Point important = new Point (3,1,character);
         Point enemyLoc = new Point (1,3, map[1][3]);
-        GoblinAI acting = new GoblinAI (important, enemyLoc);
+        GoblinAI acting = new GoblinAI (important, enemyLoc, map);
         queue.add(new Executable(enemyLoc, acting));
         Entity leave = new Entity('-');
         
+
         help.moveEntity( important, 0, 1, leave, map);
         print = help.getPrintable (map);
         help.printMap(print);
@@ -114,36 +115,27 @@ public class Game extends JFrame implements Observer {
                 public void keyPressed(KeyEvent e)
                 {
 
-                    if(e.getKeyCode() == KeyEvent.VK_W)
-                    {
-
-                        help.moveEntity( important, -1, 0, leave, map);
-                        
+                    switch (e.getKeyCode()) {
+                        case KeyEvent.VK_W:
+                            Helper.moveEntity( important, -1, 0, leave, map);
+                            break;
+                        case KeyEvent.VK_S:
+                            Helper.moveEntity( important, 1, 0, leave, map);
+                            break;
+                        case KeyEvent.VK_A:
+                            Helper.moveEntity( important, 0, -1, leave, map);
+                            break;
+                        case KeyEvent.VK_D:
+                            Helper.moveEntity( important, 0, 1, leave, map);
+                            break;
+                        default:
+                            break;
                     }
-                    else if(e.getKeyCode() == KeyEvent.VK_S)
-                    {
-
-                        help.moveEntity( important, 1, 0, leave, map);
-                        
-                    }
-                    else if(e.getKeyCode() == KeyEvent.VK_A)
-                    {
-                        help.moveEntity( important, 0, -1, leave, map);
-                        
-                    }
-                    else if(e.getKeyCode() == KeyEvent.VK_D)
-                    {
-                        help.moveEntity( important, 0, 1, leave, map);
-                        
-                    }
-                    help.doQueue(queue);
-                    print = help.getPrintable (map);
+                    Helper.doQueue(queue);
+                    print = Helper.getPrintable (map);
                     System.out.println("-------------------------------");
                     
                     help.printMap(print);
-                   
-                    
-                    
                 }
             });
         TextArea actions = new TextArea();
