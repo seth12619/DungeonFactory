@@ -5,16 +5,20 @@
  */
 package dungeonfactory;
 
+import java.util.Observable;
+
+
 /**
  *
  * @author mnmkami
  */
-public class Entity {
+public class Entity{
     char value;
     
     public Entity (char value)
     {
         this.value = value;
+        
     }
     
     public void setValue (char value)

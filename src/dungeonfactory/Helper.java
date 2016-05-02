@@ -6,12 +6,13 @@
 package dungeonfactory;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 /**
  *
  * @author mnmkami
  */
-public class Helper {
+public class Helper extends Observable{
     public Helper(){}
     
     public static void moveEntity(Point coord, int x, int y, Entity leave, Entity[][] map)
@@ -40,6 +41,9 @@ public class Helper {
             map[coord.getX()][coord.getY()] = coord.getContent();
             map[placeX][placeY] = leave;
         }
+        setChanged();
+        notifyObservers();
+        
     }
 
     public static char[][] getPrintable(Entity[][] map)

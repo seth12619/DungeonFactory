@@ -5,28 +5,56 @@
  */
 package dungeonfactory;
 
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.TextArea;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
  * @author mnmkami, seth, icon
  */
 
-public class Game {
+public class Game extends JFrame implements Observer {
 
     /**
      * @param args the command line arguments
      */
     static char [][] print;
     public static void main(String[] args) {
+        Game start = new Game();
+       
+    }
+    
+    int sizeVertical = 5;
+    int sizeHorizontal = 5;
+    
+    JPanel mapHUD = new JPanel();
+    ImageLoader loader = new ImageLoader();
+    
+    Entity [][] map = new Entity [sizeVertical][sizeHorizontal];
+    
+    
+    int rows = map.length;
+    int cols = map[0].length;
+    
+    public Game() {
+        
         
         //Helper help = new Helper();
         
-        Entity [][] map = new Entity [5][5];
+        
         ArrayList<Executable> queue = new ArrayList<>();
+        
+       
         
         
         for (int i = 0; i < 5; i++)
@@ -50,11 +78,36 @@ public class Game {
         queue.add(new Executable(enemyLoc, acting));
         Entity leave = new Entity('-');
         
-        Helper.moveEntity( important, 0, 1, leave, map);
-        print = Helper.getPrintable (map);
-        Helper.printMap(print);
+
+        help.moveEntity( important, 0, 1, leave, map);
+        print = help.getPrintable (map);
+        help.printMap(print);
+        help.addObserver(this);
         
         JFrame thing = new JFrame();
+        
+        
+        GridLayout mapGrid = new GridLayout(sizeVertical,sizeHorizontal);
+        mapGrid.setHgap(0);
+        mapGrid.setVgap(0);
+        mapHUD.setLayout(mapGrid);
+        mapHUD.setSize(400, 400);
+       
+        
+        
+        thing.setLayout(new BorderLayout());
+        thing.setTitle("Dungeon Factory");
+        
+                    
+                    for (int i = 0; i < cols; i++){
+                        for(int j = 0; j < rows; j++) {
+                            //Where we fill up the gui grid
+                            ImageIcon fill = loader.getImage(map[i][j].getValue());
+                            mapHUD.add(new JLabel(fill));
+                        }  
+                    }
+        
+        
         thing.addKeyListener(
             new KeyAdapter()
             {
@@ -82,10 +135,47 @@ public class Game {
                     print = Helper.getPrintable (map);
                     System.out.println("-------------------------------");
                     
-                    Helper.printMap(print);
+                    help.printMap(print);
                 }
             });
+        TextArea actions = new TextArea();
+        actions.setEditable(false);
+        actions.setEnabled(false);
+        JPanel text = new JPanel();
+        text.add(actions);
+        text.setEnabled(false);
+        
+        JPanel padLeft = new JPanel();
+        padLeft.setEnabled(false);
+        
+        JPanel padRight = new JPanel();
+        padRight.setEnabled(false);
+        
+        JPanel padNorth = new JPanel();
+        padNorth.setEnabled(false);
+        
+        
+        
+        thing.add(mapHUD, BorderLayout.CENTER);
+        thing.add(text, BorderLayout.SOUTH);
+        thing.add(padLeft, BorderLayout.EAST);
+        thing.add(padRight, BorderLayout.WEST);
+        thing.add(padNorth, BorderLayout.NORTH);
+        thing.setSize(625,625);
         thing.setVisible(true);
+        thing.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        mapHUD.removeAll();
+        for (int i = 0; i < cols; i++){
+            for(int j = 0; j < rows; j++) {
+                ImageIcon fill = loader.getImage(map[i][j].getValue());
+                 mapHUD.add(new JLabel(fill));
+            }  
+        }
+        mapHUD.revalidate();
     }
 
 }
