@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Helper {
     public Helper(){}
     
-    public void moveEntity(Point coord, int x, int y, Entity leave, Entity[][] map)
+    public static void moveEntity(Point coord, int x, int y, Entity leave, Entity[][] map)
     {
         int limitX = map.length;
         int limitY = map[0].length;
@@ -78,5 +78,22 @@ public class Helper {
         {
             a.doBehavior();
         }
+    }
+    
+    public static boolean checkAdjacent (Point a, Point b)
+    {
+        boolean answer = false;
+        
+        int aX = a.getX();
+        int aY = a.getY();
+        int bX = a.getX();
+        int bY = a.getY();
+        
+        if (aX - 1 == bX || aX + 1 == bX || aY - 1 == bY || aY + 1 == bY|| bX -1 == aX || bX+1 == aX || bY +1 == aY || bY -1 == aY)
+        {
+            answer = true;
+        }
+        
+        return answer;
     }
 }
