@@ -34,6 +34,8 @@ public class Game extends JFrame implements Observer {
        
     }
     
+    
+    
     int sizeVertical = 5;
     int sizeHorizontal = 5;
     
@@ -49,12 +51,14 @@ public class Game extends JFrame implements Observer {
     public Game() {
         
         
-        //Helper help = new Helper();
+        //Helper obsHelp = new Helper();
+        
+       
         
         
         ArrayList<Executable> queue = new ArrayList<>();
         
-       
+        
         
         
         for (int i = 0; i < 5; i++)
@@ -77,12 +81,15 @@ public class Game extends JFrame implements Observer {
         GoblinAI acting = new GoblinAI (important, enemyLoc, map);
         queue.add(new Executable(enemyLoc, acting));
         Entity leave = new Entity('-');
+        acting.addObserver(this);
+
+
+
+        Helper.moveEntity( important, 0, 1, leave, map);
+        print = Helper.getPrintable (map);
+        Helper.printMap(print);
         
 
-        help.moveEntity( important, 0, 1, leave, map);
-        print = help.getPrintable (map);
-        help.printMap(print);
-        help.addObserver(this);
         
         JFrame thing = new JFrame();
         
@@ -118,15 +125,19 @@ public class Game extends JFrame implements Observer {
                     switch (e.getKeyCode()) {
                         case KeyEvent.VK_W:
                             Helper.moveEntity( important, -1, 0, leave, map);
+                            localUpdate();
                             break;
                         case KeyEvent.VK_S:
                             Helper.moveEntity( important, 1, 0, leave, map);
+                            localUpdate();
                             break;
                         case KeyEvent.VK_A:
                             Helper.moveEntity( important, 0, -1, leave, map);
+                            localUpdate();
                             break;
                         case KeyEvent.VK_D:
                             Helper.moveEntity( important, 0, 1, leave, map);
+                            localUpdate();
                             break;
                         default:
                             break;
@@ -135,7 +146,7 @@ public class Game extends JFrame implements Observer {
                     print = Helper.getPrintable (map);
                     System.out.println("-------------------------------");
                     
-                    help.printMap(print);
+                    Helper.printMap(print);
                 }
             });
         TextArea actions = new TextArea();
@@ -168,6 +179,17 @@ public class Game extends JFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+        mapHUD.removeAll();
+        for (int i = 0; i < cols; i++){
+            for(int j = 0; j < rows; j++) {
+                ImageIcon fill = loader.getImage(map[i][j].getValue());
+                 mapHUD.add(new JLabel(fill));
+            }  
+        }
+        mapHUD.revalidate();
+    }
+    
+    public void localUpdate() {
         mapHUD.removeAll();
         for (int i = 0; i < cols; i++){
             for(int j = 0; j < rows; j++) {

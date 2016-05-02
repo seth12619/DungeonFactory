@@ -7,15 +7,16 @@ package dungeonfactory;
 
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.Observer;
 
 /**
  *
  * @author mnmkami
  */
-public class Helper extends Observable{
+public class Helper{
     public Helper(){}
     
-    public static void moveEntity(Point coord, int x, int y, Entity leave, Entity[][] map)
+    public static void moveEntity( Point coord, int x, int y, Entity leave, Entity[][] map)
     {
         int limitX = map.length;
         int limitY = map[0].length;
@@ -40,11 +41,14 @@ public class Helper extends Observable{
 
             map[coord.getX()][coord.getY()] = coord.getContent();
             map[placeX][placeY] = leave;
+
+            
         }
-        setChanged();
-        notifyObservers();
+        
         
     }
+    
+ 
 
     public static char[][] getPrintable(Entity[][] map)
     {

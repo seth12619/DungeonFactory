@@ -5,11 +5,13 @@
  */
 package dungeonfactory;
 
+import java.util.Observable;
+
 /**
  *
  * @author mnmkami
  */
-public class GoblinAI implements Behavior{
+public class GoblinAI extends Observable implements Behavior{
     private Point character;
     private Point me;
     private Entity[][] map;
@@ -35,28 +37,32 @@ public class GoblinAI implements Behavior{
         if (myX < hisX-1)
         {
             Helper.moveEntity(me, 1, 0, leave, map);
+            setChanged();
         }
         
         else if (myX > hisX+1)
         {
             Helper.moveEntity(me, -1, 0, leave, map);
+            setChanged();
         }
         
         else if (myY < hisY-1)
         {
             Helper.moveEntity(me, 0, 1, leave, map);
+            setChanged();
         }
         
         else if (myY > hisY+1)
         {
             Helper.moveEntity(me, 0, -1, leave, map);
+            setChanged();
         }
         
         else
         {
             System.out.println("I did nothing!");
         }
-        
+        notifyObservers();
         //System.out.println("Adjacent? " + Helper.checkAdjacent(character, me));
     }
     
