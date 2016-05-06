@@ -5,11 +5,13 @@
  */
 package dungeonfactory;
 
+import java.util.Observable;
+
 /**
  *
  * @author mnmkami
  */
-public class Executable {
+public class Executable extends Observable{
     private Point point;
     private Behavior behavior;
     
@@ -22,5 +24,7 @@ public class Executable {
     public void doBehavior()
     {
         this.behavior.execute();
+        setChanged();
+        notifyObservers();
     }
 }
