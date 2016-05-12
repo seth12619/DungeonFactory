@@ -19,9 +19,10 @@ public class Helper{
     public static Point characterMaker (int locX, int locY, Entity[][] map)
     {
         Point answer = null;
-        if (map[locX][locY].getValue() == '-')
+        if (map[locX][locY].isWalkable())
         {
-            Entity me = new Entity('C');
+            Entity me = new Entity('C', true, false, 30, 4, 2);
+            map[locX][locY] = me;
             answer = new Point (locX, locY, me);
         }
         else
@@ -35,14 +36,16 @@ public class Helper{
     public static Executable enemyMaker(char type, Point character, int locX, int locY, Entity[][] map )
     {
         Executable answer = null;
-        Entity me = new Entity (type);
-        if (map[locX][locY].getValue() == '-')
+        
+        if (map[locX][locY].isWalkable())
         {
-            map[locX][locY] = me;
-            Point myLoc = new Point(locX,locY,me);
+            
             
             if (type == 'E')
             {
+                Entity me = new Entity (type,true, false, 10, 2, 0);
+                map[locX][locY] = me;
+                Point myLoc = new Point(locX,locY,me);
                 GoblinAI myAI = new GoblinAI(character, myLoc, map);
                 answer = new Executable(myLoc, myAI);
             }
@@ -72,7 +75,7 @@ public class Helper{
             System.out.println("ERROR. YOU TRIED MOVING IT OUT OF BOUNDS!");
         }
         
-        else if (map[newX][newY].getValue() != '-')
+        else if (!map[newX][newY].isWalkable())
         {
             System.out.println("ERROR. YOU TRIED MOVING INTO ANOTHER THING!");
         }

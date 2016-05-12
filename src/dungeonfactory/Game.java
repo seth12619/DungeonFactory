@@ -65,27 +65,20 @@ public class Game extends JFrame implements Observer {
         {
             for (int j = 0; j < 5; j++)
             {
-                Entity temp = new Entity ('-');
+                Entity temp = new Entity ('-', false, true);
                 map[i][j] = temp;
             }
         }
         
-        map [3][1] = new Entity ('C');
+        
+        Point important = Helper.characterMaker(3, 1, map);
+        Executable stubA = Helper.enemyMaker('E', important, 1, 3, map);
         print = Helper.getPrintable (map);
         Helper.printMap(print);
         System.out.println("-------------------------------");
-        Entity character = map[3][1];
-        Point important = new Point (3,1,character);
-        Executable stubA = Helper.enemyMaker('E', important, 1, 3, map);
         stubA.addObserver(this);
         queue.add(stubA);
-        Entity leave = new Entity('-');
-        
-        
-
-
-
-        Helper.moveEntity( important, 0, 1, leave, map);
+        Entity leave = new Entity('-', false, true);
         print = Helper.getPrintable (map);
         Helper.printMap(print);
         

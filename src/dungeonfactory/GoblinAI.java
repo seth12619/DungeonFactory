@@ -15,7 +15,7 @@ public class GoblinAI implements Behavior{
     private Point character;
     private Point me;
     private Entity[][] map;
-    Entity leave = new Entity('-');
+    Entity leave = new Entity('-', false, true);
     public GoblinAI (Point character, Point me, Entity[][] map)
     {
         this.character = character;
