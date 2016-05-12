@@ -19,6 +19,7 @@ public class Entity{
     private int hp = 0;
     private int def = 0;
     private int atk = 0;
+    private int align = 0;
     
     public Entity (char value, boolean attackable, boolean walkable)
     {
@@ -27,7 +28,7 @@ public class Entity{
         this.walkable = walkable;
     }
     
-    public Entity (char value, boolean attackable, boolean walkable, int hp, int atk, int def)
+    public Entity (char value, boolean attackable, boolean walkable, int hp, int atk, int def, int align)
     {
         this.value = value;
         this.attackable = attackable;
@@ -35,6 +36,7 @@ public class Entity{
         this.atk = atk;
         this.def = def;
         this.hp = hp;
+        this.align = align;
     }
     
     public void setValue (char value)
@@ -86,5 +88,10 @@ public class Entity{
     public void setHp (int hp)
     {
         this.hp = hp;
+    }
+    
+    public int getAlign()
+    {
+        return align;
     }
 }

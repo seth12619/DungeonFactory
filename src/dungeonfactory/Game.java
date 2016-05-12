@@ -73,10 +73,12 @@ public class Game extends JFrame implements Observer {
         
         Point important = Helper.characterMaker(3, 1, map);
         Executable stubA = Helper.enemyMaker('E', important, 1, 3, map, queue);
+        Executable stubB = Helper.enemyMaker('E', important, 2, 3, map, queue);
         print = Helper.getPrintable (map);
         Helper.printMap(print);
         System.out.println("-------------------------------");
         stubA.addObserver(this);
+        stubB.addObserver(this);
         Entity leave = new Entity('-', false, true);
         print = Helper.getPrintable (map);
         Helper.printMap(print);

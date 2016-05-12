@@ -75,7 +75,7 @@ public class Helper{
         
         if (map[locX][locY].isWalkable())
         {
-            Entity me = new Entity('C', true, false, 50, 4, 0);
+            Entity me = new Entity('C', true, false, 50, 4, 0, 1);
             map[locX][locY] = me;
             answer = new Point(locX,locY,me);
         }
@@ -92,7 +92,7 @@ public class Helper{
             
             if (type == 'E')
             {
-                Entity me = new Entity (type,true, false, 10, 2, 0);
+                Entity me = new Entity (type,true, false, 10, 2, 0, 2);
                 map[locX][locY] = me;
                 Point myLoc = new Point(locX,locY,me);
                 GoblinAI myAI = new GoblinAI(character, myLoc, map, queue);
@@ -132,7 +132,7 @@ public class Helper{
         {
             System.out.println("ERROR. YOU TRIED MOVING INTO ANOTHER THING!");
             
-            if(map[newX][newY].isAttackable())
+            if(map[newX][newY].isAttackable() && (coord.getContent().getAlign() != map[newX][newY].getAlign()))
             {
                 Helper.attack(coord.getContent(), map[newX][newY], map, queue);
             }
