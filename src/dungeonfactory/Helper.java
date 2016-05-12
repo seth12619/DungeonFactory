@@ -16,7 +16,107 @@ import java.util.Observer;
 public class Helper{
     public Helper(){}
     
-    public static void moveEntity( Point coord, int x, int y, Entity leave, Entity[][] map)
+    public static void attack(Entity attacker, Entity defender, Entity[][] map, ArrayList<Executable> queue)
+    {
+        
+        int attack = attacker.getAtk();
+        int defense = defender.getDef();
+        int damage = attack - defense/2;
+        int health = defender.getHp() - damage;
+        if (health <= 0)
+        {
+            if(defender.getValue() == 'C')
+            {
+                 System.out.println("You died!");
+                System.exit(1);
+            }
+            else
+            {
+                Helper.killThis(defender, map, queue);
+                 System.out.println(attacker.getValue() + " attacked " + defender.getValue() + " and killed it!");
+            }
+        }
+        else
+        {
+            defender.setHp(health);
+            System.out.println(attacker.getValue() + " attacked " + defender.getValue() + " and dealt " + damage + " damage!");
+        }
+    }
+    
+    public static void killThis(Entity dying, Entity[][]map, ArrayList<Executable> queue)
+    {
+        Executable kill = findExec(dying, queue);
+        Point kill2 = kill.getPoint();
+        int x = kill2.getX();
+        int y = kill2.getY();
+        map[x][y] = new Entity ('-', false, true);
+        queue.remove(kill);
+    }
+    
+    public static Executable findExec(Entity query, ArrayList<Executable> queue)
+    {
+        Executable answer = null;
+        for (Executable a : queue)
+        {
+            Point first = a.getPoint();
+            Entity second = first.getContent();
+            if (query == second)
+            {
+                answer = a;
+                break;
+            }
+        }
+        return answer;
+    }
+    
+    public static Point characterMaker (int locX, int locY, Entity[][] map)
+    {
+        Point answer = null;
+        
+        if (map[locX][locY].isWalkable())
+        {
+            Entity me = new Entity('C', true, false, 50, 4, 0, 1);
+            map[locX][locY] = me;
+            answer = new Point(locX,locY,me);
+        }
+        
+        return answer;
+    }
+    
+    public static Executable enemyMaker(char type, Point character, int locX, int locY, Entity[][] map, ArrayList<Executable> queue)
+    {
+        Executable answer = null;
+        if (map[locX][locY].isWalkable())
+        {
+            
+            
+            if (type == 'E')
+            {
+                Entity me = new Entity (type,true, false, 10, 2, 0, 2);
+                map[locX][locY] = me;
+                Point myLoc = new Point(locX,locY,me);
+                GoblinAI myAI = new GoblinAI(character, myLoc, map, queue);
+                answer = new Executable(myLoc, myAI);
+            }
+            
+            else
+            {
+                System.out.println("You did not select a valid enemy type!");
+                answer = null;
+            }
+        }
+        else
+        {
+            System.out.println("Error! You tried spawning me on no floor.");
+        }
+        if (answer != null)
+        {
+            queue.add(answer);
+        }
+        return answer;
+    }
+    
+    public static void moveEntity( Point coord, int x, int y, Entity leave, Entity[][] map, ArrayList<Executable> queue)
     {
         int limitX = map.length;
         int limitY = map[0].length;
@@ -28,10 +128,16 @@ public class Helper{
             System.out.println("ERROR. YOU TRIED MOVING IT OUT OF BOUNDS!");
         }
         
-        else if (map[newX][newY].getValue() != '-')
+        else if (!map[newX][newY].isWalkable())
         {
             System.out.println("ERROR. YOU TRIED MOVING INTO ANOTHER THING!");
+            
+            if(map[newX][newY].isAttackable() && (coord.getContent().getAlign() != map[newX][newY].getAlign()))
+            {
+                Helper.attack(coord.getContent(), map[newX][newY], map, queue);
+            }
         }
+        
         else
         {
             int placeX = coord.getX();

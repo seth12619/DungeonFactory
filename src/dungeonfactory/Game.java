@@ -65,30 +65,21 @@ public class Game extends JFrame implements Observer {
         {
             for (int j = 0; j < 5; j++)
             {
-                Entity temp = new Entity ('-');
+                Entity temp = new Entity ('-', false, true);
                 map[i][j] = temp;
             }
         }
         
-        map [3][1] = new Entity ('C');
-        map [1][3] = new Entity ('E');
+        
+        Point important = Helper.characterMaker(3, 1, map);
+        Executable stubA = Helper.enemyMaker('E', important, 1, 3, map, queue);
+        Executable stubB = Helper.enemyMaker('E', important, 2, 3, map, queue);
         print = Helper.getPrintable (map);
         Helper.printMap(print);
         System.out.println("-------------------------------");
-        Entity character = map[3][1];
-        Point important = new Point (3,1,character);
-        Point enemyLoc = new Point (1,3, map[1][3]);
-        GoblinAI acting = new GoblinAI (important, enemyLoc, map);
-        Executable stubA = new Executable(enemyLoc, acting);
         stubA.addObserver(this);
-        queue.add(stubA);
-        Entity leave = new Entity('-');
-        
-        
-
-
-
-        Helper.moveEntity( important, 0, 1, leave, map);
+        stubB.addObserver(this);
+        Entity leave = new Entity('-', false, true);
         print = Helper.getPrintable (map);
         Helper.printMap(print);
         
@@ -127,19 +118,19 @@ public class Game extends JFrame implements Observer {
 
                     switch (e.getKeyCode()) {
                         case KeyEvent.VK_W:
-                            Helper.moveEntity( important, -1, 0, leave, map);
+                            Helper.moveEntity( important, -1, 0, leave, map, queue);
                             localUpdate();
                             break;
                         case KeyEvent.VK_S:
-                            Helper.moveEntity( important, 1, 0, leave, map);
+                            Helper.moveEntity( important, 1, 0, leave, map, queue);
                             localUpdate();
                             break;
                         case KeyEvent.VK_A:
-                            Helper.moveEntity( important, 0, -1, leave, map);
+                            Helper.moveEntity( important, 0, -1, leave, map, queue);
                             localUpdate();
                             break;
                         case KeyEvent.VK_D:
-                            Helper.moveEntity( important, 0, 1, leave, map);
+                            Helper.moveEntity( important, 0, 1, leave, map, queue);
                             localUpdate();
                             break;
                         default:
