@@ -71,15 +71,12 @@ public class Game extends JFrame implements Observer {
         }
         
         map [3][1] = new Entity ('C');
-        map [1][3] = new Entity ('E');
         print = Helper.getPrintable (map);
         Helper.printMap(print);
         System.out.println("-------------------------------");
         Entity character = map[3][1];
         Point important = new Point (3,1,character);
-        Point enemyLoc = new Point (1,3, map[1][3]);
-        GoblinAI acting = new GoblinAI (important, enemyLoc, map);
-        Executable stubA = new Executable(enemyLoc, acting);
+        Executable stubA = Helper.enemyMaker('E', important, 1, 3, map);
         stubA.addObserver(this);
         queue.add(stubA);
         Entity leave = new Entity('-');

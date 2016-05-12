@@ -16,6 +16,33 @@ import java.util.Observer;
 public class Helper{
     public Helper(){}
     
+    public static Executable enemyMaker(char type, Point character, int locX, int locY, Entity[][] map )
+    {
+        Executable answer = null;
+        Entity me = new Entity (type);
+        if (map[locX][locY].getValue() == '-')
+        {
+            map[locX][locY] = me;
+            Point myLoc = new Point(locX,locY,me);
+            
+            if (type == 'E')
+            {
+                GoblinAI myAI = new GoblinAI(character, myLoc, map);
+                answer = new Executable(myLoc, myAI);
+            }
+            
+            else
+            {
+                answer = null;
+            }
+        }
+        else
+        {
+            System.out.println("You fucked up");
+        }
+        return answer;
+    }
+    
     public static void moveEntity( Point coord, int x, int y, Entity leave, Entity[][] map)
     {
         int limitX = map.length;
