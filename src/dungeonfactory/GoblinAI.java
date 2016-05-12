@@ -5,6 +5,7 @@
  */
 package dungeonfactory;
 
+import java.util.ArrayList;
 import java.util.Observable;
 
 /**
@@ -15,12 +16,14 @@ public class GoblinAI implements Behavior{
     private Point character;
     private Point me;
     private Entity[][] map;
-    Entity leave = new Entity('-');
-    public GoblinAI (Point character, Point me, Entity[][] map)
+    Entity leave = new Entity('-', false, true);
+    private ArrayList<Executable> queue;
+    public GoblinAI (Point character, Point me, Entity[][] map, ArrayList<Executable> queue)
     {
         this.character = character;
         this.me = me;
         this.map = map;
+        this.queue = queue;
     }
     
     @Override
@@ -34,27 +37,27 @@ public class GoblinAI implements Behavior{
         
         
         
-        if (myX < hisX-1)
+        if (myX < hisX)
         {
-            Helper.moveEntity(me, 1, 0, leave, map);
+            Helper.moveEntity(me, 1, 0, leave, map, queue);
         //    setChanged();
         }
         
-        else if (myX > hisX+1)
+        else if (myX > hisX)
         {
-            Helper.moveEntity(me, -1, 0, leave, map);
+            Helper.moveEntity(me, -1, 0, leave, map, queue);
         //    setChanged();
         }
         
-        else if (myY < hisY-1)
+        else if (myY < hisY)
         {
-            Helper.moveEntity(me, 0, 1, leave, map);
+            Helper.moveEntity(me, 0, 1, leave, map, queue);
         //    setChanged();
         }
         
-        else if (myY > hisY+1)
+        else if (myY > hisY)
         {
-            Helper.moveEntity(me, 0, -1, leave, map);
+            Helper.moveEntity(me, 0, -1, leave, map, queue);
          //   setChanged();
         }
         
