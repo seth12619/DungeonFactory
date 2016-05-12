@@ -16,9 +16,9 @@ public class Entity{
     char value;
     private boolean attackable;
     private boolean walkable;
-    private int hp;
-    private int def;
-    private int atk;
+    private int hp = 0;
+    private int def = 0;
+    private int atk = 0;
     
     public Entity (char value, boolean attackable, boolean walkable)
     {

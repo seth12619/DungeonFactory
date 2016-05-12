@@ -27,4 +27,9 @@ public class Executable extends Observable{
         setChanged();
         notifyObservers();
     }
+    
+    public Point getPoint()
+    {
+        return this.point;
+    }
 }
