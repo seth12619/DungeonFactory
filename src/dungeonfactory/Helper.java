@@ -16,6 +16,22 @@ import java.util.Observer;
 public class Helper{
     public Helper(){}
     
+    public static Point characterMaker (int locX, int locY, Entity[][] map)
+    {
+        Point answer = null;
+        if (map[locX][locY].getValue() == '-')
+        {
+            Entity me = new Entity('C');
+            answer = new Point (locX, locY, me);
+        }
+        else
+        {
+            System.out.println("Error! You tried spawning me on no floor.");
+        }
+        
+        return answer;
+    }
+    
     public static Executable enemyMaker(char type, Point character, int locX, int locY, Entity[][] map )
     {
         Executable answer = null;
@@ -33,12 +49,13 @@ public class Helper{
             
             else
             {
+                System.out.println("You did not select a valid enemy type!");
                 answer = null;
             }
         }
         else
         {
-            System.out.println("You fucked up");
+            System.out.println("Error! You tried spawning me on no floor.");
         }
         return answer;
     }
