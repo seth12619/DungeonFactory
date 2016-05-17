@@ -16,10 +16,14 @@ public class GoblinAI implements Behavior{
     private Point character;
     private Point me;
     private Entity[][] map;
-    Entity leave = new Entity('-', false, true);
+    Entity leave = new Entity('_', false, true);
     private ArrayList<Executable> queue;
-    public GoblinAI (Point character, Point me, Entity[][] map, ArrayList<Executable> queue)
+    private Map level;
+    public GoblinAI (Point character, Point me, Map level)
     {
+        this.map = level.getMap();
+        this.queue = level.getQueue();
+        this.level = level;
         this.character = character;
         this.me = me;
         this.map = map;
@@ -39,25 +43,25 @@ public class GoblinAI implements Behavior{
         
         if (myX < hisX)
         {
-            Helper.moveEntity(me, 1, 0, leave, map, queue);
+            Helper.moveEntity(me, 1, 0, leave, level);
         //    setChanged();
         }
         
         else if (myX > hisX)
         {
-            Helper.moveEntity(me, -1, 0, leave, map, queue);
+            Helper.moveEntity(me, -1, 0, leave, level);
         //    setChanged();
         }
         
         else if (myY < hisY)
         {
-            Helper.moveEntity(me, 0, 1, leave, map, queue);
+            Helper.moveEntity(me, 0, 1, leave, level);
         //    setChanged();
         }
         
         else if (myY > hisY)
         {
-            Helper.moveEntity(me, 0, -1, leave, map, queue);
+            Helper.moveEntity(me, 0, -1, leave, level);
          //   setChanged();
         }
         

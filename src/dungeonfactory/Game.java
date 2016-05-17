@@ -36,51 +36,31 @@ public class Game extends JFrame implements Observer {
     
     
     
-    int sizeVertical = 5;
-    int sizeHorizontal = 5;
+    Map map = new Map(20,20,3,1);
     
     JPanel mapHUD = new JPanel();
     ImageLoader loader = new ImageLoader();
     
-    Entity [][] map = new Entity [sizeVertical][sizeHorizontal];
     
-    
-    int rows = map.length;
-    int cols = map[0].length;
+    int rows = map.getH();
+    int cols = map.getV();
     
     public Game() {
         
         
         //Helper obsHelp = new Helper();
         
-       
         
         
-        ArrayList<Executable> queue = new ArrayList<>();
-        
-        
-        
-        
-        for (int i = 0; i < 5; i++)
-        {
-            for (int j = 0; j < 5; j++)
-            {
-                Entity temp = new Entity ('-', false, true);
-                map[i][j] = temp;
-            }
-        }
-        
-        
-        Point important = Helper.characterMaker(3, 1, map);
-        Executable stubA = Helper.enemyMaker('E', important, 1, 3, map, queue);
-        Executable stubB = Helper.enemyMaker('E', important, 2, 3, map, queue);
-        print = Helper.getPrintable (map);
+        Executable stubA = Helper.enemyMaker('E', 1, 3, map);
+        Executable stubB = Helper.enemyMaker('E', 2, 3, map);
+        print = Helper.getPrintable (map.getMap());
         Helper.printMap(print);
         System.out.println("-------------------------------");
         stubA.addObserver(this);
         stubB.addObserver(this);
-        Entity leave = new Entity('-', false, true);
-        print = Helper.getPrintable (map);
+        Entity leave = new Entity('_', false, true);
+        print = Helper.getPrintable (map.getMap());
         Helper.printMap(print);
         
 
@@ -88,7 +68,7 @@ public class Game extends JFrame implements Observer {
         JFrame thing = new JFrame();
         
         
-        GridLayout mapGrid = new GridLayout(sizeVertical,sizeHorizontal);
+        GridLayout mapGrid = new GridLayout(rows,cols);
         mapGrid.setHgap(0);
         mapGrid.setVgap(0);
         mapHUD.setLayout(mapGrid);
@@ -103,7 +83,7 @@ public class Game extends JFrame implements Observer {
                     for (int i = 0; i < cols; i++){
                         for(int j = 0; j < rows; j++) {
                             //Where we fill up the gui grid
-                            ImageIcon fill = loader.getImage(map[i][j].getValue());
+                            ImageIcon fill = loader.getImage(map.getMap()[i][j].getValue());
                             mapHUD.add(new JLabel(fill));
                         }  
                     }
@@ -118,26 +98,26 @@ public class Game extends JFrame implements Observer {
 
                     switch (e.getKeyCode()) {
                         case KeyEvent.VK_W:
-                            Helper.moveEntity( important, -1, 0, leave, map, queue);
+                            Helper.moveEntity( map.getCharacter(), -1, 0, leave, map);
                             localUpdate();
                             break;
                         case KeyEvent.VK_S:
-                            Helper.moveEntity( important, 1, 0, leave, map, queue);
+                            Helper.moveEntity( map.getCharacter(), 1, 0, leave, map);
                             localUpdate();
                             break;
                         case KeyEvent.VK_A:
-                            Helper.moveEntity( important, 0, -1, leave, map, queue);
+                            Helper.moveEntity( map.getCharacter(), 0, -1, leave, map);
                             localUpdate();
                             break;
                         case KeyEvent.VK_D:
-                            Helper.moveEntity( important, 0, 1, leave, map, queue);
+                            Helper.moveEntity( map.getCharacter(), 0, 1, leave, map);
                             localUpdate();
                             break;
                         default:
                             break;
                     }
-                    Helper.doQueue(queue);
-                    print = Helper.getPrintable (map);
+                    Helper.doQueue(map.getQueue());
+                    print = Helper.getPrintable (map.getMap());
                     System.out.println("-------------------------------");
                     
                     Helper.printMap(print);
@@ -176,7 +156,7 @@ public class Game extends JFrame implements Observer {
         mapHUD.removeAll();
         for (int i = 0; i < cols; i++){
             for(int j = 0; j < rows; j++) {
-                ImageIcon fill = loader.getImage(map[i][j].getValue());
+                ImageIcon fill = loader.getImage(map.getMap()[i][j].getValue());
                  mapHUD.add(new JLabel(fill));
             }  
         }
@@ -187,7 +167,7 @@ public class Game extends JFrame implements Observer {
         mapHUD.removeAll();
         for (int i = 0; i < cols; i++){
             for(int j = 0; j < rows; j++) {
-                ImageIcon fill = loader.getImage(map[i][j].getValue());
+                ImageIcon fill = loader.getImage(map.getMap()[i][j].getValue());
                  mapHUD.add(new JLabel(fill));
             }  
         }
