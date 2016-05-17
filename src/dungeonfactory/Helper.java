@@ -34,12 +34,14 @@ public class Helper{
             else
             {
                 Helper.killThis(defender, level);
+                Actions.appendAction(attacker.getValue() + " attacked " + defender.getValue() + " and killed it!\n");
                  System.out.println(attacker.getValue() + " attacked " + defender.getValue() + " and killed it!");
             }
         }
         else
         {
             defender.setHp(health);
+            Actions.appendAction(attacker.getValue() + " attacked " + defender.getValue() + " and dealt " + damage + " damage!\n");
             System.out.println(attacker.getValue() + " attacked " + defender.getValue() + " and dealt " + damage + " damage!");
         }
     }

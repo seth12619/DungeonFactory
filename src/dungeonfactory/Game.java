@@ -8,12 +8,15 @@ package dungeonfactory;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.TextArea;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -34,22 +37,28 @@ public class Game extends JFrame implements Observer {
        
     }
     
-    
+    public JFrame thing = new JFrame();
+    public JPanel inventory = Inventory.createInventoryPanel();
     
     Map map = new Map(20,20,3,1);
     
-    JPanel mapHUD = new JPanel();
+    public static JPanel mapHUD = new JPanel();
     ImageLoader loader = new ImageLoader();
     
     
     int rows = map.getH();
     int cols = map.getV();
     
+    
+    
     public Game() {
         
         
         //Helper obsHelp = new Helper();
         
+       Item a = new ArmorOne();
+        
+       Inventory.addItem(a);
         
         
         Executable stubA = Helper.enemyMaker('E', 1, 3, map);
@@ -64,8 +73,17 @@ public class Game extends JFrame implements Observer {
         Helper.printMap(print);
         
 
+        JPanel menu = new JPanel();
         
-        JFrame thing = new JFrame();
+        JButton inventoryB = new JButton("Inventory");
+        inventoryB.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                toInventory();
+            }
+        }
+        );
+        menu.add(inventoryB);
+        
         
         
         GridLayout mapGrid = new GridLayout(rows,cols);
@@ -73,11 +91,13 @@ public class Game extends JFrame implements Observer {
         mapGrid.setVgap(0);
         mapHUD.setLayout(mapGrid);
         mapHUD.setSize(400, 400);
-       
+        
         
         
         thing.setLayout(new BorderLayout());
         thing.setTitle("Dungeon Factory");
+        thing.setFocusable(true);
+        thing.requestFocusInWindow();
         
                     
                     for (int i = 0; i < cols; i++){
@@ -123,15 +143,12 @@ public class Game extends JFrame implements Observer {
                     Helper.printMap(print);
                 }
             });
-        TextArea actions = new TextArea();
-        actions.setEditable(false);
-        actions.setEnabled(false);
-        JPanel text = new JPanel();
-        text.add(actions);
-        text.setEnabled(false);
         
-        JPanel padLeft = new JPanel();
-        padLeft.setEnabled(false);
+        JPanel text = Actions.createTextArea();
+        
+        JPanel inventory = Inventory.createInventoryPanel();
+        
+        
         
         JPanel padRight = new JPanel();
         padRight.setEnabled(false);
@@ -143,8 +160,8 @@ public class Game extends JFrame implements Observer {
         
         thing.add(mapHUD, BorderLayout.CENTER);
         thing.add(text, BorderLayout.SOUTH);
-        thing.add(padLeft, BorderLayout.EAST);
-        thing.add(padRight, BorderLayout.WEST);
+        thing.add(menu, BorderLayout.WEST);
+        thing.add(padRight, BorderLayout.EAST);
         thing.add(padNorth, BorderLayout.NORTH);
         thing.setSize(625,625);
         thing.setVisible(true);
@@ -161,6 +178,7 @@ public class Game extends JFrame implements Observer {
             }  
         }
         mapHUD.revalidate();
+        localUpdate();
     }
     
     public void localUpdate() {
@@ -172,6 +190,27 @@ public class Game extends JFrame implements Observer {
             }  
         }
         mapHUD.revalidate();
+    }
+    
+    public static boolean inventoryPress = false;
+    
+    public void toInventory() {
+        if (inventoryPress == false) {
+            thing.add(inventory,BorderLayout.CENTER);
+            thing.revalidate();
+            Inventory.update();
+            inventoryPress = true;
+            System.out.println("it is gonna add INVENTORY");
+        } else {
+            thing.add(mapHUD,BorderLayout.CENTER);
+            
+            inventoryPress = false;
+            thing.revalidate();
+            localUpdate();
+            thing.requestFocusInWindow();
+            
+            System.out.println("it is gonna add MAP");
+        }
     }
 
 }
