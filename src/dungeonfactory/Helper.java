@@ -16,9 +16,10 @@ import java.util.Observer;
 public class Helper{
     public Helper(){}
     
-    public static void attack(Entity attacker, Entity defender, Entity[][] map, ArrayList<Executable> queue)
+    public static void attack(Entity attacker, Entity defender, Map level)
     {
-        
+        Entity[][] map = level.getMap();
+        ArrayList<Executable> queue = level.getQueue();
         int attack = attacker.getAtk();
         int defense = defender.getDef();
         int damage = attack - defense/2;
@@ -32,7 +33,7 @@ public class Helper{
             }
             else
             {
-                Helper.killThis(defender, map, queue);
+                Helper.killThis(defender, level);
                 Actions.appendAction(attacker.getValue() + " attacked " + defender.getValue() + " and killed it!\n");
                  System.out.println(attacker.getValue() + " attacked " + defender.getValue() + " and killed it!");
             }
@@ -45,18 +46,21 @@ public class Helper{
         }
     }
     
-    public static void killThis(Entity dying, Entity[][]map, ArrayList<Executable> queue)
+    public static void killThis(Entity dying, Map level)
     {
-        Executable kill = findExec(dying, queue);
+        Entity[][] map = level.getMap();
+        ArrayList<Executable> queue = level.getQueue();
+        Executable kill = findExec(dying, level);
         Point kill2 = kill.getPoint();
         int x = kill2.getX();
         int y = kill2.getY();
-        map[x][y] = new Entity ('-', false, true);
+        map[x][y] = new Entity ('_', false, true);
         queue.remove(kill);
     }
     
-    public static Executable findExec(Entity query, ArrayList<Executable> queue)
+    public static Executable findExec(Entity query, Map level)
     {
+        ArrayList<Executable> queue = level.getQueue();
         Executable answer = null;
         for (Executable a : queue)
         {
@@ -71,24 +75,23 @@ public class Helper{
         return answer;
     }
     
-    public static Point characterMaker (int locX, int locY, Entity[][] map)
+    public static Point characterMaker (int locX, int locY, Map level)
     {
         Point answer = null;
-        
-        if (map[locX][locY].isWalkable())
-        {
+        Entity[][] map = level.getMap();
             Entity me = new Entity('C', true, false, 50, 4, 0, 1);
             map[locX][locY] = me;
             answer = new Point(locX,locY,me);
-        }
         
         return answer;
     }
     
-    public static Executable enemyMaker(char type, Point character, int locX, int locY, Entity[][] map, ArrayList<Executable> queue)
-    {
+    public static Executable enemyMaker(char type, int locX, int locY, Map level)
+    {   
+        Point character = level.getCharacter();
+        Entity[][] map = level.getMap();
+        ArrayList<Executable> queue = level.getQueue();
         Executable answer = null;
-        if (map[locX][locY].isWalkable())
         {
             
             
@@ -97,7 +100,7 @@ public class Helper{
                 Entity me = new Entity (type,true, false, 10, 2, 0, 2);
                 map[locX][locY] = me;
                 Point myLoc = new Point(locX,locY,me);
-                GoblinAI myAI = new GoblinAI(character, myLoc, map, queue);
+                GoblinAI myAI = new GoblinAI(character, myLoc, level);
                 answer = new Executable(myLoc, myAI);
             }
             
@@ -107,10 +110,6 @@ public class Helper{
                 answer = null;
             }
         }
-        else
-        {
-            System.out.println("Error! You tried spawning me on no floor.");
-        }
         if (answer != null)
         {
             queue.add(answer);
@@ -118,8 +117,10 @@ public class Helper{
         return answer;
     }
     
-    public static void moveEntity( Point coord, int x, int y, Entity leave, Entity[][] map, ArrayList<Executable> queue)
+    public static void moveEntity( Point coord, int x, int y, Entity leave, Map level)
     {
+        Entity[][] map = level.getMap();
+        ArrayList<Executable> queue = level.getQueue();
         int limitX = map.length;
         int limitY = map[0].length;
         int newX = coord.getX() + x;
@@ -136,7 +137,7 @@ public class Helper{
             
             if(map[newX][newY].isAttackable() && (coord.getContent().getAlign() != map[newX][newY].getAlign()))
             {
-                Helper.attack(coord.getContent(), map[newX][newY], map, queue);
+                Helper.attack(coord.getContent(), map[newX][newY], level);
             }
         }
         
