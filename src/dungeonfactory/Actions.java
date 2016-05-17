@@ -44,6 +44,10 @@ public class Actions {
     }
 
     public static void appendAction(String action) {
-        actions.append(action);
+        actions.append(action + "\n");
+    }
+    
+    public static void setNewText(String action) {
+        actions.setText(action);
     }
 }

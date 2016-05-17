@@ -14,7 +14,6 @@ import javax.swing.ImageIcon;
 public abstract class Item {
     String name = "No Item";
     String description = "What description";
-    ImageIcon image = new ImageIcon("src/dungeonfactory/Images/stubGr.png");
     int atk = 0;
     int def = 0;
     int hp = 0;
@@ -26,10 +25,6 @@ public abstract class Item {
     
     public String getDescription() {
         return description;
-    }
-    
-    public ImageIcon getImage() {
-        return image;
     }
     
     public int getAtk() {
