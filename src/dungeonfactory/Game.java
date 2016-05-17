@@ -40,7 +40,7 @@ public class Game extends JFrame implements Observer {
     public JFrame thing = new JFrame();
     public JPanel inventory = Inventory.createInventoryPanel();
     
-    Map map = new Map(20,20,3,1);
+    Map map = new Map(20,20,this);
     
     public static JPanel mapHUD = new JPanel();
     ImageLoader loader = new ImageLoader();
@@ -61,13 +61,9 @@ public class Game extends JFrame implements Observer {
        Inventory.addItem(a);
         
         
-        Executable stubA = Helper.enemyMaker('E', 1, 3, map);
-        Executable stubB = Helper.enemyMaker('E', 2, 3, map);
         print = Helper.getPrintable (map.getMap());
         Helper.printMap(print);
         System.out.println("-------------------------------");
-        stubA.addObserver(this);
-        stubB.addObserver(this);
         Entity leave = new Entity('_', false, true);
         print = Helper.getPrintable (map.getMap());
         Helper.printMap(print);
@@ -139,7 +135,6 @@ public class Game extends JFrame implements Observer {
                     Helper.doQueue(map.getQueue());
                     print = Helper.getPrintable (map.getMap());
                     System.out.println("-------------------------------");
-                    
                     Helper.printMap(print);
                 }
             });

@@ -79,12 +79,9 @@ public class Helper{
     {
         Point answer = null;
         Entity[][] map = level.getMap();
-        if (map[locX][locY].isWalkable())
-        {
             Entity me = new Entity('C', true, false, 50, 4, 0, 1);
             map[locX][locY] = me;
             answer = new Point(locX,locY,me);
-        }
         
         return answer;
     }
@@ -95,7 +92,6 @@ public class Helper{
         Entity[][] map = level.getMap();
         ArrayList<Executable> queue = level.getQueue();
         Executable answer = null;
-        if (map[locX][locY].isWalkable())
         {
             
             
@@ -113,10 +109,6 @@ public class Helper{
                 System.out.println("You did not select a valid enemy type!");
                 answer = null;
             }
-        }
-        else
-        {
-            System.out.println("Error! You tried spawning me on no floor.");
         }
         if (answer != null)
         {

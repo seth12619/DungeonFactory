@@ -24,10 +24,8 @@ public class GoblinAI implements Behavior{
         this.map = level.getMap();
         this.queue = level.getQueue();
         this.level = level;
-        this.character = character;
+        this.character = level.getCharacter();
         this.me = me;
-        this.map = map;
-        this.queue = queue;
     }
     
     @Override
