@@ -41,9 +41,9 @@ public class Game extends JFrame implements Observer {
     
     public JFrame thing = new JFrame();
     public static JPanel inventory = Inventory.createInventoryPanel();
-    
-    
-    Map map = new Map(20,20,this);
+    Game game = this;
+    int currFloor = 1;
+    Map map = new Map(game, currFloor);
     
     public static JPanel mapHUD = new JPanel();
     ImageLoader loader = new ImageLoader();
@@ -56,6 +56,10 @@ public class Game extends JFrame implements Observer {
     JPanel inventoryMenu = new JPanel(); //When in Inventory mode Menu
     
     JButton inventoryB = new JButton("Inventory");
+    
+    Entity leave = new Entity('_', false, true);
+    
+    String temp;
     
     public Game() {
         
@@ -73,7 +77,7 @@ public class Game extends JFrame implements Observer {
         print = Helper.getPrintable (map.getMap());
         Helper.printMap(print);
         System.out.println("-------------------------------");
-        Entity leave = new Entity('_', false, true);
+
         print = Helper.getPrintable (map.getMap());
         Helper.printMap(print);
         
@@ -149,31 +153,51 @@ public class Game extends JFrame implements Observer {
                 @Override
                 public void keyPressed(KeyEvent e)
                 {
-
-                    switch (e.getKeyCode()) {
-                        case KeyEvent.VK_W:
-                            Helper.moveEntity( map.getCharacter(), -1, 0, leave, map);
-                            localUpdate();
-                            break;
-                        case KeyEvent.VK_S:
-                            Helper.moveEntity( map.getCharacter(), 1, 0, leave, map);
-                            localUpdate();
-                            break;
-                        case KeyEvent.VK_A:
-                            Helper.moveEntity( map.getCharacter(), 0, -1, leave, map);
-                            localUpdate();
-                            break;
-                        case KeyEvent.VK_D:
-                            Helper.moveEntity( map.getCharacter(), 0, 1, leave, map);
-                            localUpdate();
-                            break;
-                        default:
-                            break;
+                    if (e.getKeyCode() == KeyEvent.VK_W)
+                    {
+                        Helper.moveEntity( map.getCharacter(), -1, 0, map);
+                        localUpdate();
                     }
-                    Helper.doQueue(map.getQueue());
+                    
+                    else if (e.getKeyCode() == KeyEvent.VK_S)
+                    {
+                        Helper.moveEntity( map.getCharacter(), 1, 0, map);
+                        localUpdate();
+                    }
+                    
+                    else if (e.getKeyCode() == KeyEvent.VK_A)
+                    {
+                        Helper.moveEntity( map.getCharacter(), 0, -1, map);
+                        localUpdate();
+                    }
+                    
+                    else if (e.getKeyCode() == KeyEvent.VK_D)
+                    {
+                        Helper.moveEntity( map.getCharacter(), 0, 1, map);
+                        localUpdate();
+                    }
+                    else
+                    {
+                        //do nothing
+                    }
+                    if(Helper.checkDoor(map))
+                    {
+                        
+                        currFloor = currFloor + 1;
+                        map = new Map(game, currFloor);
+                        cols = map.getV();
+                        rows = map.getH();
+                        Actions.appendAction("You've moved to floor " + currFloor + "!\n");
+                        localUpdate();
+                    }
+                    else
+                    {
+                        Helper.doQueue(map.getQueue());
+                    }
                     print = Helper.getPrintable (map.getMap());
                     System.out.println("-------------------------------");
                     Helper.printMap(print);
+                    
                 }
             });
         
@@ -230,7 +254,7 @@ public class Game extends JFrame implements Observer {
     public void toInventory() {
         if (inventoryPress == false) {
             
-            
+            temp = Actions.actions.getText();
             thing.remove(mapHUD);
             thing.remove(menu);
             
@@ -252,6 +276,8 @@ public class Game extends JFrame implements Observer {
             
           
         } else {
+            
+            Actions.setNewText(temp);
             thing.remove(inventoryMenu);
             thing.remove(inventory);
             

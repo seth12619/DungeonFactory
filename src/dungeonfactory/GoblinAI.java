@@ -41,25 +41,25 @@ public class GoblinAI implements Behavior{
         
         if (myX < hisX)
         {
-            Helper.moveEntity(me, 1, 0, leave, level);
+            Helper.moveEntity(me, 1, 0, level);
         //    setChanged();
         }
         
         else if (myX > hisX)
         {
-            Helper.moveEntity(me, -1, 0, leave, level);
+            Helper.moveEntity(me, -1, 0, level);
         //    setChanged();
         }
         
         else if (myY < hisY)
         {
-            Helper.moveEntity(me, 0, 1, leave, level);
+            Helper.moveEntity(me, 0, 1, level);
         //    setChanged();
         }
         
         else if (myY > hisY)
         {
-            Helper.moveEntity(me, 0, -1, leave, level);
+            Helper.moveEntity(me, 0, -1, level);
          //   setChanged();
         }
         
