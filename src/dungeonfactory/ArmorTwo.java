@@ -11,19 +11,19 @@ import javax.swing.ImageIcon;
  *
  * @author Seth, Icon, Marco
  */
-public class ArmorOne extends ItemDecorator{
+public class ArmorTwo extends ItemDecorator{
     Item item;
-    String name = "Iron Armor";
-    String description = "Standard Iron Armor";
+    String name = "Steel Armor";
+    String description = "Standard Steel Armor";
     int atk = 0;
-    int def = 1;
-    int hp = 5;
+    int def = 2;
+    int hp = 7;
     
-    public ArmorOne() {
+    public ArmorTwo() {
         
     }
 
-    public ArmorOne(ItemDecorator id) {
+    public ArmorTwo(ItemDecorator id) {
         super(id);
     }
 

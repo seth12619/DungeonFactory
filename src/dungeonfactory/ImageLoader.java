@@ -20,13 +20,13 @@ public class ImageLoader {
         ImageIcon image = null;
         
             switch(arrayText) {
-                case '-': image = new ImageIcon("src/dungeonfactory/Graphics/Floor.png");//("src/dungeonfactory/Images/stubGr.png");//
+                case '_': image = new ImageIcon("src/dungeonfactory/Graphics/Floor.png");//("src/dungeonfactory/Images/stubGr.png");//
                     return image;
                 case 'C': image = new ImageIcon("src/dungeonfactory/Images/stubCh.png");
                     return image;
                 case 'E': image = new ImageIcon("src/dungeonfactory/Images/stubEn.png");
                     return image;
-                case 'W': image = new ImageIcon("src/dungeonfactory/Graphics/Wall.png");
+                case '-': image = new ImageIcon("src/dungeonfactory/Graphics/Wall.png");
                     return image;
                 case 'T': image = new ImageIcon("src/dungeonfactory/Graphics/Chest.png");
                     return image;
@@ -36,13 +36,25 @@ public class ImageLoader {
 
     }
     
-    public ImageIcon resize(ImageIcon image) {
+    public static ImageIcon getImage(String text) {
+        ImageIcon image = null;
+        
+        switch(text) {
+            case "Iron Armor": image = new ImageIcon("src/dungeonfactory/Graphics/Armor1.png");
+                break;
+            case "Steel Armor": image = new ImageIcon("src/dungeonfactory/Graphics/Armor2.png");
+                break;
+            default: image = new ImageIcon("src/dungeonfactory/Graphics/Armor1.png");
+                break;
+        }
         Image img = image.getImage();
         BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
         Graphics g = bi.createGraphics();
-        g.drawImage(img, 0, 0, 100, 100, null);
-        ImageIcon newImage = new ImageIcon(bi);
-        return newImage;
+        g.drawImage(img, 8, -20, 80, 300, null);
+        image = new ImageIcon(bi);
+        return image;
     }
+    
+    
     
 }
