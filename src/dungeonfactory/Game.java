@@ -6,6 +6,7 @@
 package dungeonfactory;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
@@ -15,6 +16,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -38,7 +40,7 @@ public class Game extends JFrame implements Observer {
     }
     
     public JFrame thing = new JFrame();
-    public JPanel inventory = Inventory.createInventoryPanel();
+    public static JPanel inventory = Inventory.createInventoryPanel();
     Game game = this;
     int currFloor = 1;
     Map map = new Map(game, currFloor);
@@ -50,18 +52,26 @@ public class Game extends JFrame implements Observer {
     int rows = map.getH();
     int cols = map.getV();
     
+    JPanel menu = new JPanel(); //default starting menu
+    JPanel inventoryMenu = new JPanel(); //When in Inventory mode Menu
     
+    JButton inventoryB = new JButton("Inventory");
     
     Entity leave = new Entity('_', false, true);
+    
+    String temp;
     
     public Game() {
         
         
         //Helper obsHelp = new Helper();
         
+       //Test Item adding
        Item a = new ArmorOne();
+       Item b = new ArmorTwo();
         
        Inventory.addItem(a);
+       Inventory.addItem(b);
         
         
         print = Helper.getPrintable (map.getMap());
@@ -72,9 +82,9 @@ public class Game extends JFrame implements Observer {
         Helper.printMap(print);
         
 
-        JPanel menu = new JPanel();
+        inventoryMenu.setLayout(new BorderLayout());
         
-        JButton inventoryB = new JButton("Inventory");
+        
         inventoryB.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 toInventory();
@@ -82,7 +92,36 @@ public class Game extends JFrame implements Observer {
         }
         );
         menu.add(inventoryB);
+        //inventoryMenu.add(inventoryB, BorderLayout.NORTH);
         
+        
+        JButton selectNextItem = new JButton("Next");
+        selectNextItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                selectNext("next");
+            }
+        });
+        JButton selectPrevItem = new JButton("Prev");
+        selectPrevItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                selectNext("prev");
+            }
+        });
+        inventoryMenu.add(selectPrevItem,BorderLayout.WEST);
+        inventoryMenu.add(selectNextItem, BorderLayout.EAST);
+        JButton removeItem = new JButton("Remove");
+        removeItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                if(selectedItem.getName().equals("No Item")) {
+                    Actions.setNewText("No Item to Remove");
+                } else {
+                Inventory.removeItem(selectedItem);
+                Inventory.update(11);
+                Actions.setNewText("No Item");
+                }
+            }
+        });
+        inventoryMenu.add(removeItem, BorderLayout.SOUTH);
         
         
         GridLayout mapGrid = new GridLayout(rows,cols);
@@ -214,21 +253,75 @@ public class Game extends JFrame implements Observer {
     
     public void toInventory() {
         if (inventoryPress == false) {
+            
+            temp = Actions.actions.getText();
+            thing.remove(mapHUD);
+            thing.remove(menu);
+            
+            Inventory.update(11);
             thing.add(inventory,BorderLayout.CENTER);
+            
+            inventoryMenu.add(inventoryB, BorderLayout.NORTH);
+            thing.add(inventoryMenu, BorderLayout.WEST);
+            
+            inventIndex = 0;
+            selectedItem = Inventory.selectItem(inventIndex);
+            
             thing.revalidate();
-            Inventory.update();
+            thing.repaint();
             inventoryPress = true;
+            
+            
             System.out.println("it is gonna add INVENTORY");
+            
+          
         } else {
-            thing.add(mapHUD,BorderLayout.CENTER);
+            
+            Actions.setNewText(temp);
+            thing.remove(inventoryMenu);
+            thing.remove(inventory);
             
             inventoryPress = false;
-            thing.revalidate();
+            
             localUpdate();
-            thing.requestFocusInWindow();
+            
+            
+            menu.add(inventoryB);
+            thing.add(menu, BorderLayout.WEST);
+            
             
             System.out.println("it is gonna add MAP");
+            
+            thing.add(mapHUD,BorderLayout.CENTER);
+            thing.revalidate();
+            thing.repaint();
+            thing.requestFocusInWindow();
         }
+    }
+    
+    
+    static int inventIndex = 0;
+    static Item selectedItem = null;
+    public static void selectNext(String direction) {
+        if(direction.equals("prev")) {
+            if(inventIndex == 0) {
+                inventIndex = 9;
+            } else {
+                inventIndex--;     
+            }
+            selectedItem = Inventory.selectItem(inventIndex);
+
+        } else {
+            if(inventIndex == 9) {
+                inventIndex = 0;
+            } else {
+                inventIndex++;
+            }
+            selectedItem = Inventory.selectItem(inventIndex);
+            
+        }
+        
+
     }
 
 }
