@@ -14,13 +14,28 @@ import javax.swing.ImageIcon;
 public abstract class Item {
     String name = "No Item";
     String description = "What description";
+    String type = "newType Gundam";
     int atk = 0;
     int def = 0;
     int hp = 0;
     
+    public Item() {
+        setStats();
+    }
     
+    //The ff is a hook
+    void setStats() {
+        
+    }
+    
+    
+    //The rest are stuff that everything has
     public String getName() {
         return name;
+    }
+    
+    public String getType() {
+        return type;
     }
     
     public String getDescription() {
@@ -39,8 +54,5 @@ public abstract class Item {
         return hp;
     }
     
-    
-    public abstract int atk();
-    public abstract int def();
-    public abstract int hp();
+
 }

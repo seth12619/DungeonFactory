@@ -28,6 +28,8 @@ public class ImageLoader {
                     return image;
                 case '-': image = new ImageIcon("src/dungeonfactory/Graphics/Wall.png");
                     return image;
+                case 'S': image = new ImageIcon("src/dungeonfactory/Graphics/Stairs.png");
+                    return image;
                 case 'T': image = new ImageIcon("src/dungeonfactory/Graphics/Chest.png");
                     return image;
                 default: image = new ImageIcon("src/dungeonfactory/Images/stubGr.png");
@@ -50,7 +52,7 @@ public class ImageLoader {
         Image img = image.getImage();
         BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
         Graphics g = bi.createGraphics();
-        g.drawImage(img, 8, -20, 80, 300, null);
+        g.drawImage(img, 4, -20, 70, 300, null);
         image = new ImageIcon(bi);
         return image;
     }

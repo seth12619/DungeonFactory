@@ -36,6 +36,9 @@ public class Helper{
                 Helper.killThis(defender, level);
                 Actions.appendAction(attacker.getValue() + " attacked " + defender.getValue() + " and killed it!");
                  System.out.println(attacker.getValue() + " attacked " + defender.getValue() + " and killed it!");
+                    System.out.println("HP: " + attacker.getHp());
+                    System.out.println("Atk: " + attacker.getAtk());
+                    System.out.println("Def: " + attacker.getDef());
             }
         }
         else
@@ -43,6 +46,9 @@ public class Helper{
             defender.setHp(health);
             Actions.appendAction(attacker.getValue() + " attacked " + defender.getValue() + " and dealt " + damage + " damage!");
             System.out.println(attacker.getValue() + " attacked " + defender.getValue() + " and dealt " + damage + " damage!");
+                System.out.println("HP: " + attacker.getHp());
+                System.out.println("Atk: " + attacker.getAtk());
+                System.out.println("Def: " + attacker.getDef());
         }
     }
     

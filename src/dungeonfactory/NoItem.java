@@ -11,19 +11,6 @@ package dungeonfactory;
  */
 public class NoItem extends Item {
 
-    @Override
-    public int atk() {
-        return 0;
-    }
-
-    @Override
-    public int def() {
-        return 0;
-    }
-
-    @Override
-    public int hp() {
-        return 0;
-    }
+ 
     
 }

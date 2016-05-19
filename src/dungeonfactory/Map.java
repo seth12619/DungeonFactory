@@ -125,7 +125,7 @@ public class Map {
                 
                 else if (input [i][j] == 'D')
                 {
-                    map[i][j] = new Entity ('T', false, true);
+                    map[i][j] = new Entity ('S', false, true);
                     this.door = new Point (i,j,map[i][j]);
                 }
                 

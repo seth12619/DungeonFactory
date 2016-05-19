@@ -99,20 +99,35 @@ public class Game extends JFrame implements Observer {
         
         JButton selectNextItem = new JButton("Next");
         selectNextItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent ae) {
                 selectNext("next");
             }
         });
         JButton selectPrevItem = new JButton("Prev");
         selectPrevItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent ae) {
                 selectNext("prev");
             }
         });
         inventoryMenu.add(selectPrevItem,BorderLayout.WEST);
         inventoryMenu.add(selectNextItem, BorderLayout.EAST);
+        
+        JButton equipItem = new JButton("Equip");  //EQUIP ITEMS
+        equipItem.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent ae) {
+               EquipmentHelper.setEquipment(selectedItem);
+               EquipmentHelper.updateStats(map.getCharacter());
+               Inventory.removeItem(selectedItem);
+               Inventory.update(11);
+           }
+        });
+        inventoryMenu.add(equipItem, BorderLayout.CENTER);
         JButton removeItem = new JButton("Remove");
         removeItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent ae) {
                 if(selectedItem.getName().equals("No Item")) {
                     Actions.setNewText("No Item to Remove");
@@ -126,11 +141,13 @@ public class Game extends JFrame implements Observer {
         inventoryMenu.add(removeItem, BorderLayout.SOUTH);
         
         
+        
         GridLayout mapGrid = new GridLayout(rows,cols);
         mapGrid.setHgap(0);
         mapGrid.setVgap(0);
+        
         mapHUD.setLayout(mapGrid);
-        mapHUD.setSize(400, 400);
+        mapHUD.setSize(150, 150);
         
         
         
@@ -139,14 +156,7 @@ public class Game extends JFrame implements Observer {
         thing.setFocusable(true);
         thing.requestFocusInWindow();
         
-                    
-                    for (int i = 0; i < cols; i++){
-                        for(int j = 0; j < rows; j++) {
-                            //Where we fill up the gui grid
-                            ImageIcon fill = loader.getImage(map.getMap()[i][j].getValue());
-                            mapHUD.add(new JLabel(fill));
-                        }  
-                    }
+        localUpdate();            
         
         
         thing.addKeyListener(
@@ -240,14 +250,6 @@ public class Game extends JFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        mapHUD.removeAll();
-        for (int i = 0; i < cols; i++){
-            for(int j = 0; j < rows; j++) {
-                ImageIcon fill = loader.getImage(map.getMap()[i][j].getValue());
-                 mapHUD.add(new JLabel(fill));
-            }  
-        }
-        mapHUD.revalidate();
         localUpdate();
     }
     
@@ -256,10 +258,14 @@ public class Game extends JFrame implements Observer {
         for (int i = 0; i < cols; i++){
             for(int j = 0; j < rows; j++) {
                 ImageIcon fill = loader.getImage(map.getMap()[i][j].getValue());
-                 mapHUD.add(new JLabel(fill));
+                JPanel toAdd = new MapImageHelper(fill);
+                //JLabel toAdd = new JLabel(fill);
+                
+                mapHUD.add(toAdd);
             }  
         }
         mapHUD.revalidate();
+        mapHUD.repaint();
     }
     
     public static boolean inventoryPress = false;
