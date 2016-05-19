@@ -34,15 +34,21 @@ public class Helper{
             else
             {
                 Helper.killThis(defender, level);
-                Actions.appendAction(attacker.getValue() + " attacked " + defender.getValue() + " and killed it!\n");
+                Actions.appendAction(attacker.getValue() + " attacked " + defender.getValue() + " and killed it!");
                  System.out.println(attacker.getValue() + " attacked " + defender.getValue() + " and killed it!");
+                    System.out.println("HP: " + attacker.getHp());
+                    System.out.println("Atk: " + attacker.getAtk());
+                    System.out.println("Def: " + attacker.getDef());
             }
         }
         else
         {
             defender.setHp(health);
-            Actions.appendAction(attacker.getValue() + " attacked " + defender.getValue() + " and dealt " + damage + " damage!\n");
+            Actions.appendAction(attacker.getValue() + " attacked " + defender.getValue() + " and dealt " + damage + " damage!");
             System.out.println(attacker.getValue() + " attacked " + defender.getValue() + " and dealt " + damage + " damage!");
+                System.out.println("HP: " + attacker.getHp());
+                System.out.println("Atk: " + attacker.getAtk());
+                System.out.println("Def: " + attacker.getDef());
         }
     }
     
@@ -117,7 +123,32 @@ public class Helper{
         return answer;
     }
     
-    public static void moveEntity( Point coord, int x, int y, Entity leave, Map level)
+    public static boolean checkDoor (Map level)
+    {
+        if (level.getCharacter().getX() == level.getDoor().getX() && level.getCharacter().getY() == level.getDoor().getY())
+        {
+            System.out.println("True");
+            return true;
+        }
+        
+        else
+        {
+            System.out.println("False");
+            return false;
+        }
+    }
+    
+    public static void unloadMap (Map level, Game game)
+    {
+        ArrayList<Executable> queue = level.getQueue();
+        for (Executable a : queue)
+        {
+            a.deleteObserver(game);
+            queue.remove(a);
+        }
+    }
+    
+    public static void moveEntity( Point coord, int x, int y, Map level)
     {
         Entity[][] map = level.getMap();
         ArrayList<Executable> queue = level.getQueue();
@@ -147,9 +178,11 @@ public class Helper{
             int placeY = coord.getY();
             coord.setX(newX);
             coord.setY(newY);
-
+            
+            Entity temp = map[coord.getX()][coord.getY()];
             map[coord.getX()][coord.getY()] = coord.getContent();
-            map[placeX][placeY] = leave;
+            map[placeX][placeY] = coord.getLeave();
+            coord.setLeave(temp);
 
             
         }

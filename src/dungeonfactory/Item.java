@@ -14,22 +14,32 @@ import javax.swing.ImageIcon;
 public abstract class Item {
     String name = "No Item";
     String description = "What description";
-    ImageIcon image = new ImageIcon("src/dungeonfactory/Images/stubGr.png");
+    String type = "newType Gundam";
     int atk = 0;
     int def = 0;
     int hp = 0;
     
+    public Item() {
+        setStats();
+    }
     
+    //The ff is a hook
+    void setStats() {
+        
+    }
+    
+    
+    //The rest are stuff that everything has
     public String getName() {
         return name;
     }
     
-    public String getDescription() {
-        return description;
+    public String getType() {
+        return type;
     }
     
-    public ImageIcon getImage() {
-        return image;
+    public String getDescription() {
+        return description;
     }
     
     public int getAtk() {
@@ -44,8 +54,5 @@ public abstract class Item {
         return hp;
     }
     
-    
-    public abstract int atk();
-    public abstract int def();
-    public abstract int hp();
+
 }

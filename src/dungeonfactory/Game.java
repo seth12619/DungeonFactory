@@ -6,6 +6,7 @@
 package dungeonfactory;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
@@ -15,6 +16,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -38,9 +40,10 @@ public class Game extends JFrame implements Observer {
     }
     
     public JFrame thing = new JFrame();
-    public JPanel inventory = Inventory.createInventoryPanel();
-    
-    Map map = new Map(20,20,this);
+    public static JPanel inventory = Inventory.createInventoryPanel();
+    Game game = this;
+    int currFloor = 1;
+    Map map = new Map(game, currFloor);
     
     public static JPanel mapHUD = new JPanel();
     ImageLoader loader = new ImageLoader();
@@ -49,29 +52,41 @@ public class Game extends JFrame implements Observer {
     int rows = map.getH();
     int cols = map.getV();
     
+    boolean inMenu = false;
     
+    JPanel menu = new JPanel(); //default starting menu
+    JPanel inventoryMenu = new JPanel(); //When in Inventory mode Menu
+    
+    JButton inventoryB = new JButton("Inventory");
+    
+    Entity leave = new Entity('_', false, true);
+    
+    String temp;
     
     public Game() {
         
         
         //Helper obsHelp = new Helper();
         
+       //Test Item adding
        Item a = new ArmorOne();
+       Item b = new ArmorTwo();
         
        Inventory.addItem(a);
+       Inventory.addItem(b);
         
         
         print = Helper.getPrintable (map.getMap());
         Helper.printMap(print);
         System.out.println("-------------------------------");
-        Entity leave = new Entity('_', false, true);
+
         print = Helper.getPrintable (map.getMap());
         Helper.printMap(print);
         
 
-        JPanel menu = new JPanel();
+        inventoryMenu.setLayout(new BorderLayout());
         
-        JButton inventoryB = new JButton("Inventory");
+        
         inventoryB.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 toInventory();
@@ -79,14 +94,60 @@ public class Game extends JFrame implements Observer {
         }
         );
         menu.add(inventoryB);
+        //inventoryMenu.add(inventoryB, BorderLayout.NORTH);
+        
+        
+        JButton selectNextItem = new JButton("Next");
+        selectNextItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                selectNext("next");
+            }
+        });
+        JButton selectPrevItem = new JButton("Prev");
+        selectPrevItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                selectNext("prev");
+            }
+        });
+        inventoryMenu.add(selectPrevItem,BorderLayout.WEST);
+        inventoryMenu.add(selectNextItem, BorderLayout.EAST);
+        
+        JButton equipItem = new JButton("Equip");  //EQUIP ITEMS
+        equipItem.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent ae) {
+               EquipmentHelper.setEquipment(selectedItem);
+               EquipmentHelper.updateStats(map.getCharacter());
+               Inventory.removeItem(selectedItem);
+               Inventory.update(11);
+           }
+        });
+        inventoryMenu.add(equipItem, BorderLayout.CENTER);
+        JButton removeItem = new JButton("Remove");
+        removeItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if(selectedItem.getName().equals("No Item")) {
+                    Actions.setNewText("No Item to Remove");
+                } else {
+                Inventory.removeItem(selectedItem);
+                Inventory.update(11);
+                Actions.setNewText("No Item");
+                }
+            }
+        });
+        inventoryMenu.add(removeItem, BorderLayout.SOUTH);
         
         
         
         GridLayout mapGrid = new GridLayout(rows,cols);
         mapGrid.setHgap(0);
         mapGrid.setVgap(0);
+        
         mapHUD.setLayout(mapGrid);
-        mapHUD.setSize(400, 400);
+        mapHUD.setSize(150, 150);
         
         
         
@@ -95,14 +156,7 @@ public class Game extends JFrame implements Observer {
         thing.setFocusable(true);
         thing.requestFocusInWindow();
         
-                    
-                    for (int i = 0; i < cols; i++){
-                        for(int j = 0; j < rows; j++) {
-                            //Where we fill up the gui grid
-                            ImageIcon fill = loader.getImage(map.getMap()[i][j].getValue());
-                            mapHUD.add(new JLabel(fill));
-                        }  
-                    }
+        localUpdate();            
         
         
         thing.addKeyListener(
@@ -111,31 +165,62 @@ public class Game extends JFrame implements Observer {
                 @Override
                 public void keyPressed(KeyEvent e)
                 {
+                    if (inMenu == false)
+                    {
+                        if (e.getKeyCode() == KeyEvent.VK_W)
+                        {
+                            Helper.moveEntity( map.getCharacter(), -1, 0, map);
+                            localUpdate();
+                        }
 
-                    switch (e.getKeyCode()) {
-                        case KeyEvent.VK_W:
-                            Helper.moveEntity( map.getCharacter(), -1, 0, leave, map);
+                        else if (e.getKeyCode() == KeyEvent.VK_S)
+                        {
+                            Helper.moveEntity( map.getCharacter(), 1, 0, map);
                             localUpdate();
-                            break;
-                        case KeyEvent.VK_S:
-                            Helper.moveEntity( map.getCharacter(), 1, 0, leave, map);
+                        }
+
+                        else if (e.getKeyCode() == KeyEvent.VK_A)
+                        {
+                            Helper.moveEntity( map.getCharacter(), 0, -1, map);
                             localUpdate();
-                            break;
-                        case KeyEvent.VK_A:
-                            Helper.moveEntity( map.getCharacter(), 0, -1, leave, map);
+                        }
+
+                        else if (e.getKeyCode() == KeyEvent.VK_D)
+                        {
+                            Helper.moveEntity( map.getCharacter(), 0, 1, map);
                             localUpdate();
-                            break;
-                        case KeyEvent.VK_D:
-                            Helper.moveEntity( map.getCharacter(), 0, 1, leave, map);
+                        }
+                        else
+                        {
+                            //do nothing
+                        }
+                        if(Helper.checkDoor(map))
+                        {
+
+                            currFloor = currFloor + 1;
+                            map = new Map(game, currFloor);
+                            cols = map.getV();
+                            rows = map.getH();
+                            thing.remove(mapHUD);
+                            GridLayout mapGrid2 = new GridLayout(rows,cols);
+                            mapGrid.setHgap(0);
+                            mapGrid.setVgap(0);
+                            mapHUD = new JPanel();
+                            mapHUD.setLayout(mapGrid2);
+                            mapHUD.setSize(400, 400);
+                            thing.add(mapHUD,BorderLayout.CENTER);
+
+                            Actions.appendAction("You've moved to floor " + currFloor + "!\n");
                             localUpdate();
-                            break;
-                        default:
-                            break;
+                        }
+                        else
+                        {
+                            Helper.doQueue(map.getQueue());
+                        }
+                        print = Helper.getPrintable (map.getMap());
+                        System.out.println("-------------------------------");
+                        Helper.printMap(print);
                     }
-                    Helper.doQueue(map.getQueue());
-                    print = Helper.getPrintable (map.getMap());
-                    System.out.println("-------------------------------");
-                    Helper.printMap(print);
                 }
             });
         
@@ -165,14 +250,6 @@ public class Game extends JFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        mapHUD.removeAll();
-        for (int i = 0; i < cols; i++){
-            for(int j = 0; j < rows; j++) {
-                ImageIcon fill = loader.getImage(map.getMap()[i][j].getValue());
-                 mapHUD.add(new JLabel(fill));
-            }  
-        }
-        mapHUD.revalidate();
         localUpdate();
     }
     
@@ -181,31 +258,89 @@ public class Game extends JFrame implements Observer {
         for (int i = 0; i < cols; i++){
             for(int j = 0; j < rows; j++) {
                 ImageIcon fill = loader.getImage(map.getMap()[i][j].getValue());
-                 mapHUD.add(new JLabel(fill));
+                JPanel toAdd = new MapImageHelper(fill);
+                //JLabel toAdd = new JLabel(fill);
+                
+                mapHUD.add(toAdd);
             }  
         }
         mapHUD.revalidate();
+        mapHUD.repaint();
     }
     
     public static boolean inventoryPress = false;
     
     public void toInventory() {
         if (inventoryPress == false) {
+            inMenu = true;
+            temp = Actions.actions.getText();
+            thing.remove(mapHUD);
+            thing.remove(menu);
+            
+            Inventory.update(11);
             thing.add(inventory,BorderLayout.CENTER);
+            
+            inventoryMenu.add(inventoryB, BorderLayout.NORTH);
+            thing.add(inventoryMenu, BorderLayout.WEST);
+            
+            inventIndex = 0;
+            selectedItem = Inventory.selectItem(inventIndex);
+            
             thing.revalidate();
-            Inventory.update();
+            thing.repaint();
             inventoryPress = true;
+            
+            
             System.out.println("it is gonna add INVENTORY");
+            
+          
         } else {
-            thing.add(mapHUD,BorderLayout.CENTER);
+            inMenu = false;
+            Actions.setNewText(temp);
+            thing.remove(inventoryMenu);
+            thing.remove(inventory);
             
             inventoryPress = false;
-            thing.revalidate();
+            
             localUpdate();
-            thing.requestFocusInWindow();
+            
+            
+            menu.add(inventoryB);
+            thing.add(menu, BorderLayout.WEST);
+            
             
             System.out.println("it is gonna add MAP");
+            
+            thing.add(mapHUD,BorderLayout.CENTER);
+            thing.revalidate();
+            thing.repaint();
+            thing.requestFocusInWindow();
         }
+    }
+    
+    
+    static int inventIndex = 0;
+    static Item selectedItem = null;
+    public static void selectNext(String direction) {
+        if(direction.equals("prev")) {
+            if(inventIndex == 0) {
+                inventIndex = 9;
+            } else {
+                inventIndex--;     
+            }
+            selectedItem = Inventory.selectItem(inventIndex);
+
+        } else {
+            if(inventIndex == 9) {
+                inventIndex = 0;
+            } else {
+                inventIndex++;
+            }
+            selectedItem = Inventory.selectItem(inventIndex);
+            
+        }
+        
+
     }
 
 }
