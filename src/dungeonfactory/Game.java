@@ -6,17 +6,14 @@
 package dungeonfactory;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -57,11 +54,16 @@ public class Game extends JFrame implements Observer {
     JPanel menu = new JPanel(); //default starting menu
     JPanel inventoryMenu = new JPanel(); //When in Inventory mode Menu
     
+    JLabel HP = new JLabel(" HP: " + map.getCharacter().getContent().getHp());
+    JLabel def = new JLabel(" Def: " + map.getCharacter().getContent().getDef());
+    JLabel atk = new JLabel(" Atk: " + map.getCharacter().getContent().getAtk());
+    
     JButton inventoryB = new JButton("Inventory");
     
     Entity leave = new Entity('_', false, true);
     
     String temp;
+    
     
     public Game() {
         
@@ -74,6 +76,11 @@ public class Game extends JFrame implements Observer {
         
        Inventory.addItem(a);
        Inventory.addItem(b);
+       
+        BoxLayout menuLayout = new BoxLayout(menu, BoxLayout.Y_AXIS);
+        
+        menu.setLayout(menuLayout);
+        
         
         
         print = Helper.getPrintable (map.getMap());
@@ -94,6 +101,12 @@ public class Game extends JFrame implements Observer {
         }
         );
         menu.add(inventoryB);
+        menu.add(new JLabel(" "));
+        menu.add(new JLabel("Stats"));
+        menu.add(atk);
+        menu.add(HP);
+        menu.add(def);
+        
         //inventoryMenu.add(inventoryB, BorderLayout.NORTH);
         
         
@@ -266,6 +279,10 @@ public class Game extends JFrame implements Observer {
         }
         mapHUD.revalidate();
         mapHUD.repaint();
+        
+        HP.setText(" HP: " + map.getCharacter().getContent().getHp());
+        def.setText(" Def: " + map.getCharacter().getContent().getDef());
+        atk.setText(" Atk: " + map.getCharacter().getContent().getAtk());
     }
     
     public static boolean inventoryPress = false;
