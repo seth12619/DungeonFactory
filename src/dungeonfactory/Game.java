@@ -52,6 +52,8 @@ public class Game extends JFrame implements Observer {
     int rows = map.getH();
     int cols = map.getV();
     
+    boolean inMenu = false;
+    
     JPanel menu = new JPanel(); //default starting menu
     JPanel inventoryMenu = new JPanel(); //When in Inventory mode Menu
     
@@ -153,51 +155,62 @@ public class Game extends JFrame implements Observer {
                 @Override
                 public void keyPressed(KeyEvent e)
                 {
-                    if (e.getKeyCode() == KeyEvent.VK_W)
+                    if (inMenu == false)
                     {
-                        Helper.moveEntity( map.getCharacter(), -1, 0, map);
-                        localUpdate();
+                        if (e.getKeyCode() == KeyEvent.VK_W)
+                        {
+                            Helper.moveEntity( map.getCharacter(), -1, 0, map);
+                            localUpdate();
+                        }
+
+                        else if (e.getKeyCode() == KeyEvent.VK_S)
+                        {
+                            Helper.moveEntity( map.getCharacter(), 1, 0, map);
+                            localUpdate();
+                        }
+
+                        else if (e.getKeyCode() == KeyEvent.VK_A)
+                        {
+                            Helper.moveEntity( map.getCharacter(), 0, -1, map);
+                            localUpdate();
+                        }
+
+                        else if (e.getKeyCode() == KeyEvent.VK_D)
+                        {
+                            Helper.moveEntity( map.getCharacter(), 0, 1, map);
+                            localUpdate();
+                        }
+                        else
+                        {
+                            //do nothing
+                        }
+                        if(Helper.checkDoor(map))
+                        {
+
+                            currFloor = currFloor + 1;
+                            map = new Map(game, currFloor);
+                            cols = map.getV();
+                            rows = map.getH();
+                            thing.remove(mapHUD);
+                            GridLayout mapGrid2 = new GridLayout(rows,cols);
+                            mapGrid.setHgap(0);
+                            mapGrid.setVgap(0);
+                            mapHUD = new JPanel();
+                            mapHUD.setLayout(mapGrid2);
+                            mapHUD.setSize(400, 400);
+                            thing.add(mapHUD,BorderLayout.CENTER);
+
+                            Actions.appendAction("You've moved to floor " + currFloor + "!\n");
+                            localUpdate();
+                        }
+                        else
+                        {
+                            Helper.doQueue(map.getQueue());
+                        }
+                        print = Helper.getPrintable (map.getMap());
+                        System.out.println("-------------------------------");
+                        Helper.printMap(print);
                     }
-                    
-                    else if (e.getKeyCode() == KeyEvent.VK_S)
-                    {
-                        Helper.moveEntity( map.getCharacter(), 1, 0, map);
-                        localUpdate();
-                    }
-                    
-                    else if (e.getKeyCode() == KeyEvent.VK_A)
-                    {
-                        Helper.moveEntity( map.getCharacter(), 0, -1, map);
-                        localUpdate();
-                    }
-                    
-                    else if (e.getKeyCode() == KeyEvent.VK_D)
-                    {
-                        Helper.moveEntity( map.getCharacter(), 0, 1, map);
-                        localUpdate();
-                    }
-                    else
-                    {
-                        //do nothing
-                    }
-                    if(Helper.checkDoor(map))
-                    {
-                        
-                        currFloor = currFloor + 1;
-                        map = new Map(game, currFloor);
-                        cols = map.getV();
-                        rows = map.getH();
-                        Actions.appendAction("You've moved to floor " + currFloor + "!\n");
-                        localUpdate();
-                    }
-                    else
-                    {
-                        Helper.doQueue(map.getQueue());
-                    }
-                    print = Helper.getPrintable (map.getMap());
-                    System.out.println("-------------------------------");
-                    Helper.printMap(print);
-                    
                 }
             });
         
@@ -253,7 +266,7 @@ public class Game extends JFrame implements Observer {
     
     public void toInventory() {
         if (inventoryPress == false) {
-            
+            inMenu = true;
             temp = Actions.actions.getText();
             thing.remove(mapHUD);
             thing.remove(menu);
@@ -276,7 +289,7 @@ public class Game extends JFrame implements Observer {
             
           
         } else {
-            
+            inMenu = false;
             Actions.setNewText(temp);
             thing.remove(inventoryMenu);
             thing.remove(inventory);

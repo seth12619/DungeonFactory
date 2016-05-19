@@ -46,12 +46,20 @@ public class Map {
             o = h;
         }
         
-        else
+        else if (level == 2)
         {
             l = a;
             m = b;
             n = c;
             o = d;
+        }
+        
+        else
+        {
+            l = e;
+            m = f;
+            n = g;
+            o = h;
         }
         
         this.sizeV = l.length*2;
