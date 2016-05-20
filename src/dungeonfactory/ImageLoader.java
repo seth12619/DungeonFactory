@@ -17,24 +17,30 @@ import javax.swing.ImageIcon;
 public class ImageLoader {
     
     public ImageIcon getImage(char arrayText) {
-        ImageIcon image = null;
+        ImageIcon image = new ImageIcon("src/dungeonfactory/Images/stubGr.png");;
         
             switch(arrayText) {
                 case '_': image = new ImageIcon("src/dungeonfactory/Graphics/Floor.png");//("src/dungeonfactory/Images/stubGr.png");//
-                    return image;
-                case 'C': image = new ImageIcon("src/dungeonfactory/Images/stubCh.png");
-                    return image;
-                case 'E': image = new ImageIcon("src/dungeonfactory/Images/stubEn.png");
-                    return image;
+                    break;
+                case 'C': image = new ImageIcon("src/dungeonfactory/Graphics/Hero_Down (F).png");
+                    break;
+                case 'E': image = new ImageIcon("src/dungeonfactory/Graphics/Goblin_Down (F).png");
+                    break;
                 case '-': image = new ImageIcon("src/dungeonfactory/Graphics/Wall.png");
-                    return image;
+                    break;
                 case 'S': image = new ImageIcon("src/dungeonfactory/Graphics/Stairs.png");
-                    return image;
+                    break;
                 case 'T': image = new ImageIcon("src/dungeonfactory/Graphics/Chest.png");
-                    return image;
+                    break;
                 default: image = new ImageIcon("src/dungeonfactory/Images/stubGr.png");
-                    return image;
+                    break;
             }
+        Image img = image.getImage();
+        BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        Graphics g = bi.createGraphics();
+        g.drawImage(img, 0, 0, 120, 120, null);  //values to be changed (img, 0, 0, Width, Height, null) //do not change the rest
+        image = new ImageIcon(bi); 
+        return image;
 
     }
     
