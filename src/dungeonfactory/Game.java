@@ -6,6 +6,7 @@
 package dungeonfactory;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -57,6 +58,10 @@ public class Game extends JFrame implements Observer {
     JLabel HP = new JLabel(" HP: " + map.getCharacter().getContent().getHp());
     JLabel def = new JLabel(" Def: " + map.getCharacter().getContent().getDef());
     JLabel atk = new JLabel(" Atk: " + map.getCharacter().getContent().getAtk());
+    JLabel wep = new JLabel("<html><body>\' Weapon:  <br>- " + EquipmentHelper.getWep() + "</body></html>");
+    JLabel helm = new JLabel("<html><body>\' Helmet: <br>- " + EquipmentHelper.getHelm() + "</body></html>");
+    JLabel armor = new JLabel("<html><body>\' Armor: <br>- " + EquipmentHelper.getArmor() + "</body></html>");
+    
     
     JButton inventoryB = new JButton("Inventory");
     
@@ -81,6 +86,9 @@ public class Game extends JFrame implements Observer {
         
         menu.setLayout(menuLayout);
         
+        menu.setPreferredSize(new Dimension(100, 500));
+        menu.setMaximumSize(menu.getPreferredSize());
+        
         
         
         print = Helper.getPrintable (map.getMap());
@@ -102,10 +110,17 @@ public class Game extends JFrame implements Observer {
         );
         menu.add(inventoryB);
         menu.add(new JLabel(" "));
-        menu.add(new JLabel("Stats"));
+        menu.add(new JLabel(" Stats"));
         menu.add(atk);
         menu.add(HP);
         menu.add(def);
+        menu.add(new JLabel(" "));
+        menu.add(new JLabel(" Equipment"));
+        menu.add(wep);
+        menu.add(new JLabel(" "));
+        menu.add(helm);
+        menu.add(new JLabel(" "));
+        menu.add(armor);
         
         //inventoryMenu.add(inventoryB, BorderLayout.NORTH);
         
@@ -131,10 +146,12 @@ public class Game extends JFrame implements Observer {
         equipItem.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent ae) {
-               EquipmentHelper.setEquipment(selectedItem);
-               EquipmentHelper.updateStats(map.getCharacter());
+               EquipmentHelper.setEquipment(map.getCharacter(), selectedItem);
+              
                Inventory.removeItem(selectedItem);
                Inventory.update(11);
+               
+            
            }
         });
         inventoryMenu.add(equipItem, BorderLayout.CENTER);
@@ -283,6 +300,9 @@ public class Game extends JFrame implements Observer {
         HP.setText(" HP: " + map.getCharacter().getContent().getHp());
         def.setText(" Def: " + map.getCharacter().getContent().getDef());
         atk.setText(" Atk: " + map.getCharacter().getContent().getAtk());
+        wep.setText("<html><body>\' Weapon:  <br>- " + EquipmentHelper.getWep() + "</body></html>");
+        helm.setText("<html><body>\' Helmet: <br>- " + EquipmentHelper.getHelm() + "</body></html>");
+        armor.setText("<html><body>\' Armor: <br>- " + EquipmentHelper.getArmor() + "</body></html>");
     }
     
     public static boolean inventoryPress = false;

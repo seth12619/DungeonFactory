@@ -22,35 +22,32 @@ public abstract class Item {
     public Item() {
         setStats();
     }
-    
-    //The ff is a hook
-    void setStats() {
-        
-    }
+
+    public abstract void setStats();
     
     
     //The rest are stuff that everything has
-    public String getName() {
+    public final String getName() {
         return name;
     }
     
-    public String getType() {
+    public final String getType() {
         return type;
     }
     
-    public String getDescription() {
+    public final String getDescription() {
         return description;
     }
     
-    public int getAtk() {
+    public final int getAtk() {
         return atk;
     }
     
-    public int getDef() {
+    public final int getDef() {
         return def;
     }
     
-    public int getHP(){
+    public final int getHP(){
         return hp;
     }
     

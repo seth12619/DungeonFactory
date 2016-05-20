@@ -11,6 +11,16 @@ package dungeonfactory;
  */
 public class NoItem extends Item {
 
+    @Override
+    public void setStats() {
+        super.name = "None";
+        super.description = "None";
+        super.type = "N/A";
+        super.atk = 0;
+        super.def= 0;
+        super.hp = 0;
+    }
+
  
     
 }

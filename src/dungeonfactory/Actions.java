@@ -5,9 +5,11 @@
  */
 package dungeonfactory;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -26,7 +28,7 @@ public class Actions {
     public static JPanel createTextArea() {
         JPanel theArea = new JPanel();
         
-
+        theArea.setLayout(new BorderLayout());
         
         actions.setEditable(false);
         actions.setEnabled(false);
@@ -35,7 +37,10 @@ public class Actions {
         
         actions.setDisabledTextColor(Color.BLACK);
         
-        theArea.add(scroll);
+        theArea.add(new JLabel("                                 "), BorderLayout.WEST);
+        theArea.add(scroll, BorderLayout.CENTER);
+        theArea.add(new JLabel("   "), BorderLayout.EAST);
+        theArea.add(new JLabel(" "), BorderLayout.SOUTH);
 
         
         return theArea;

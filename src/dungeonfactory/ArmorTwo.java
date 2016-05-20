@@ -11,11 +11,8 @@ package dungeonfactory;
  */
 public class ArmorTwo extends Item{
     
-    public ArmorTwo() {
-        setStats();
-    }
 
-        @Override
+    @Override
     public void setStats() {
         super.name = "Steel Armor";
         super.description = "Standard Steel Armor";

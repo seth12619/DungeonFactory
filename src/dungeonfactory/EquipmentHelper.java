@@ -23,14 +23,17 @@ public class EquipmentHelper {
         
     }
     
-    public static void setEquipment(Item toEquip) {
+    public static void setEquipment(Point chara, Item toEquip) {
         System.out.println("HERE: " + toEquip.getName());
         switch(toEquip.getType()) {
-            case "Armor": bodyArmor = toEquip;
+            case "Armor": removeItem(chara, bodyArmor);
+                bodyArmor = toEquip;
                 break;
-            case "Helmet": helmet = toEquip;
+            case "Helmet": removeItem(chara, helmet);
+                helmet = toEquip;
                 break;
-            case "Weapon": weapon = toEquip;
+            case "Weapon": removeItem(chara, weapon);
+                weapon = toEquip;
                 break;
             case "newType Gundam": Actions.appendAction("No item to equip!");
                 break;
@@ -39,6 +42,25 @@ public class EquipmentHelper {
             
         }
         refreshAdditional();
+        updateStats(chara);
+    }
+    
+    public static String getArmor() {
+        return bodyArmor.getName();
+    }
+    
+    public static String getWep() {
+        return weapon.getName();
+    }
+    
+    public static String getHelm() {
+        return helmet.getName();
+    }
+    
+    public static void removeItem(Point chara, Item toRemove) {
+        chara.getContent().setAtk(chara.getContent().getAtk() - toRemove.getAtk());
+        chara.getContent().setDef(chara.getContent().getDef() - toRemove.getDef());
+        //chara.getContent().setHp(chara.getContent().getHp() - toRemove.getHP());
     }
     
     public static void refreshAdditional() {
