@@ -35,7 +35,7 @@ public class WizardAI implements Behavior{
         int hisX = character.getX();
         int hisY = character.getY();
         
-        if((myX == hisX && abs(myY-hisY) >=4) || ((myY == hisY && abs(myX-hisX) >=4)))
+        if(((myX == hisX && abs(myY-hisY) >=4) || ((myY == hisY && abs(myX-hisX) >=4))) && Helper.lineSight(me, character, level) )
         {
             Helper.attack(me.getContent(), character.getContent(), level);
         }

@@ -37,14 +37,13 @@ public class DragonAI implements Behavior{
         
         
         
-        if(abs(myX-hisX) <=1 && abs(myY-hisY) <=1 && buffed == false && abs(myX-hisX) != abs(myY-hisY))
+        if(abs(myX-hisX) <=1 && abs(myY-hisY) <=1 && buffed == false && abs(myX-hisX) != abs(myY-hisY) )
         {
             System.out.println("I AM BUFFED, MORTAL.");
             me.getContent().setAtk(me.getContent().getAtk() + 1);
             buffed = true;
         }
-        
-        if((myX == hisX && abs(myY-hisY) <=3) || ((myY == hisY && abs(myX-hisX) <=3)))
+        if(((myX == hisX && abs(myY-hisY) <=3) || ((myY == hisY && abs(myX-hisX) <=3))) && Helper.lineSight(me, character, level))
         {
             Helper.attack(me.getContent(), character.getContent(), level);
         }

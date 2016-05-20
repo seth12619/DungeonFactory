@@ -5,6 +5,7 @@
  */
 package dungeonfactory;
 
+import static java.lang.Math.abs;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -15,6 +16,79 @@ import java.util.Observer;
  */
 public class Helper{
     public Helper(){}
+    
+    public static boolean lineSight(Point one, Point two, Map level)
+    {
+        int oneX = one.getX();
+        int oneY = one.getY();
+        int twoX = two.getX();
+        int twoY = two.getY();
+        boolean answer = false;
+        Entity[][] map = level.getMap();
+        
+        int start;
+        int distance;
+        
+        if (oneX == twoX)
+        {
+            System.out.println("You got in!");
+            if (oneY < twoY)
+            {
+                start = oneY;
+                distance = twoY - oneY + start;
+            }
+            else
+            {
+                start = twoY;
+                distance = oneY - twoY +start;
+            }
+            
+            for (int i = start + 1; i < distance; i++)
+            {
+                boolean walkable = map[oneX][i].isWalkable();
+                if (walkable)
+                {
+                    answer = true;
+                }
+                else
+                {
+                    answer = false;
+                    break;
+                }
+            }
+        }
+        else if (oneY == twoY)
+        {
+            System.out.println("You got in!");
+            if (oneX < twoX)
+            {
+                start = oneX;
+                distance = twoX - oneX + start;
+            }
+            else
+            {
+                start = twoX;
+                distance = oneX - twoX +start;
+            }
+            
+            for (int i = start + 1; i < distance; i++)
+            {
+                boolean walkable = map[i][oneY].isWalkable();
+                if (walkable)
+                {
+                    answer = true;
+                }
+                else
+                {
+                    answer = false;
+                    break;
+                }
+            }
+        }
+        
+        
+        return answer;
+    }
     
     public static void attack(Entity attacker, Entity defender, Map level)
     {
@@ -164,15 +238,138 @@ public class Helper{
     {
         if (level.getCharacter().getX() == level.getDoor().getX() && level.getCharacter().getY() == level.getDoor().getY())
         {
-            System.out.println("True");
+            System.out.println("True Dicks");
             return true;
         }
         
         else
         {
-            System.out.println("False");
+            System.out.println("False Dicks");
             return false;
         }
+    }
+    
+    public static boolean checkChest (Map level)
+    {
+        if (level.getCharacter().getX() == level.getChest().getX() && level.getCharacter().getY() == level.getChest().getY())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    public static Item takeChest()
+    {
+        Item temp = null;
+        int range = (25 - 1) + 1;     
+        int check = (int) ((Math.random() * range) +1);
+        System.out.println(check);
+        if (check == 1)
+        {
+            temp =  new ArmorOne();
+        }
+        else if (check == 2)
+        {
+            temp =  new ArmorTwo();
+        }
+        else if (check == 3)
+        {
+            temp =  new ArmorThree();
+        }
+        else if (check == 4)
+        {
+            temp = new ArmorFour();
+        }
+        else if (check == 5)
+        {
+            temp =  new ArmorFive();
+        }
+        
+        else if (check == 6)
+        {
+            temp =  new BootsOne();
+        }
+        else if (check == 7)
+        {
+            temp = new BootsTwo();
+        }
+        else if (check == 8)
+        {
+            temp =  new BootsThree();
+        }
+        else if (check == 9)
+        {
+            temp =  new BootsFour();
+        }
+        else if (check == 10)
+        {
+            temp =  new BootsFive();
+        }
+        else if (check == 11)
+        {
+            temp = new HelmetOne();
+        }
+        else if (check == 12)
+        {
+            temp = new HelmetTwo();
+        }
+        else if (check == 13)
+        {
+            temp =  new HelmetThree();
+        }
+        else if (check == 14)
+        {
+            temp =  new HelmetFour();
+        }
+        else if (check == 15)
+        {
+            temp =  new HelmetFive();
+        }
+        else if (check == 16)
+        {
+            temp = new ShieldOne();
+        }
+        else if (check == 17)
+        {
+            temp = new ShieldTwo();
+        }
+        else if (check == 18)
+        {
+            temp = new ShieldThree();
+        }
+        else if (check == 19)
+        {
+            temp = new ShieldFour();
+        }
+        else if (check == 20)
+        {
+            temp = new ShieldFive();
+        }
+        else if (check == 21)
+        {
+            temp = new WeaponOne();
+        }
+        else if (check == 22)
+        {
+            temp = new WeaponTwo();
+        }
+        else if (check == 23)
+        {
+            temp = new WeaponThree();
+        }
+        else if (check == 24)
+        {
+            temp = new WeaponFour();
+        }
+        else
+        {
+            temp = new WeaponFive();
+        }
+        
+        return temp;
     }
     
     public static void unloadMap (Map level, Game game)
