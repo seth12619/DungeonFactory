@@ -246,6 +246,7 @@ public class Game extends JFrame implements Observer {
                         {
                             //do nothing
                         }
+                        //Inventory.addItem(Helper.takeChest());
                         if(Helper.checkDoor(map))
                         {
                             charHP = map.character.getContent().getHp();
