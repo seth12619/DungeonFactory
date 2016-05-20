@@ -60,7 +60,8 @@ public class Helper{
         Point kill2 = kill.getPoint();
         int x = kill2.getX();
         int y = kill2.getY();
-        map[x][y] = new Entity ('_', false, true);
+        Entity leave = kill2.getLeave();
+        map[x][y] = leave;
         queue.remove(kill);
     }
     
@@ -81,11 +82,20 @@ public class Helper{
         return answer;
     }
     
-    public static Point characterMaker (int locX, int locY, Map level)
+    public static Point characterMaker (int locX, int locY, Map level, int floor, int hp, int atk, int def)
     {
         Point answer = null;
         Entity[][] map = level.getMap();
-            Entity me = new Entity('C', true, false, 50, 4, 0, 1);
+        Entity me;
+            if (floor == 1)
+            {
+                 me = new Entity('C', true, false, 50, 4, 0, 1);
+            }
+            
+            else
+            {
+                 me = new Entity('C', true, false, hp, atk, def, 1);
+            }
             map[locX][locY] = me;
             answer = new Point(locX,locY,me);
         
@@ -107,6 +117,33 @@ public class Helper{
                 map[locX][locY] = me;
                 Point myLoc = new Point(locX,locY,me);
                 GoblinAI myAI = new GoblinAI(character, myLoc, level);
+                answer = new Executable(myLoc, myAI);
+            }
+            
+            else if (type == 'B')
+            {
+                Entity me = new Entity (type,true, false, 5, 3, 0, 2);
+                map[locX][locY] = me;
+                Point myLoc = new Point(locX,locY,me);
+                BirdAI myAI = new BirdAI(character, myLoc, level);
+                answer = new Executable(myLoc, myAI);
+            }
+            
+            else if (type == 'W')
+            {
+                Entity me = new Entity (type,true, false, 4, 3, 0, 2);
+                map[locX][locY] = me;
+                Point myLoc = new Point(locX,locY,me);
+                WizardAI myAI = new WizardAI(character, myLoc, level);
+                answer = new Executable(myLoc, myAI);
+            }
+            
+            else if (type == 'Z')
+            {
+                Entity me = new Entity (type,true, false, 40, 4, 0, 2);
+                map[locX][locY] = me;
+                Point myLoc = new Point(locX,locY,me);
+                DragonAI myAI = new DragonAI(character, myLoc, level);
                 answer = new Executable(myLoc, myAI);
             }
             

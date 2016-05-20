@@ -41,14 +41,19 @@ public class Game extends JFrame implements Observer {
     public static JPanel inventory = Inventory.createInventoryPanel();
     Game game = this;
     int currFloor = 1;
+    int charAtk;
+    int charDef;
+    int charHP;
     Map map = new Map(game, currFloor);
     
     public static JPanel mapHUD = new JPanel();
-    ImageLoader loader = new ImageLoader();
+    
     
     
     int rows = map.getH();
     int cols = map.getV();
+    
+    ImageLoader loader = new ImageLoader();
     
     boolean inMenu = false;
     
@@ -226,8 +231,16 @@ public class Game extends JFrame implements Observer {
                         }
                         if(Helper.checkDoor(map))
                         {
-
+                            charHP = map.character.getContent().getHp();
+                            charAtk = map.character.getContent().getAtk();
+                            charDef = map.character.getContent().getDef();
                             currFloor = currFloor + 1;
+                            if (currFloor == 8)
+                            {
+                                //insert code that prints a score and a "you've won" screen
+                                System.out.println("You've won!");
+                                System.exit(1);
+                            }
                             map = new Map(game, currFloor);
                             cols = map.getV();
                             rows = map.getH();
@@ -240,7 +253,7 @@ public class Game extends JFrame implements Observer {
                             mapHUD.setSize(400, 400);
                             thing.add(mapHUD,BorderLayout.CENTER);
 
-                            Actions.appendAction("You've moved to floor " + currFloor + "!\n");
+                            Actions.appendAction("You've moved to floor " + currFloor + "!");
                             localUpdate();
                         }
                         else
@@ -288,8 +301,8 @@ public class Game extends JFrame implements Observer {
         for (int i = 0; i < cols; i++){
             for(int j = 0; j < rows; j++) {
                 ImageIcon fill = loader.getImage(map.getMap()[i][j].getValue());
-                JPanel toAdd = new MapImageHelper(fill);
-                //JLabel toAdd = new JLabel(fill);
+                //JPanel toAdd = new MapImageHelper(fill);
+                JLabel toAdd = new JLabel(fill);
                 
                 mapHUD.add(toAdd);
             }  

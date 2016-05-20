@@ -32,6 +32,8 @@ public class ImageLoader {
                     break;
                 case 'T': image = new ImageIcon("src/dungeonfactory/Graphics/Chest.png");
                     break;
+                case 'B': image = new ImageIcon("src/dungeonfactory/Graphics/Bird_Down (F).png");
+                    break;
                 default: image = new ImageIcon("src/dungeonfactory/Images/stubGr.png");
                     break;
             }
