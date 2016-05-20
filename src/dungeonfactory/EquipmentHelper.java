@@ -14,6 +14,8 @@ public class EquipmentHelper {
     public static Item bodyArmor = new NoItem();
     public static Item helmet = new NoItem();
     public static Item weapon = new NoItem();
+    public static Item shield = new NoItem();
+    public static Item boots = new NoItem();
     
     static int addAtk = 0;
     static int addDef = 0;
@@ -34,6 +36,12 @@ public class EquipmentHelper {
                 break;
             case "Weapon": removeItem(chara, weapon);
                 weapon = toEquip;
+                break;
+            case "Boots": removeItem(chara, boots);
+                boots = toEquip;
+                break;
+            case "Shield": removeItem(chara, shield);
+                shield = toEquip;
                 break;
             case "newType Gundam": Actions.appendAction("No item to equip!");
                 break;
@@ -57,6 +65,14 @@ public class EquipmentHelper {
         return helmet.getName();
     }
     
+    public static String getBoots() {
+        return boots.getName();
+    }
+    
+    public static String getShield() {
+        return shield.getName();
+    }
+    
     public static void removeItem(Point chara, Item toRemove) {
         chara.getContent().setAtk(chara.getContent().getAtk() - toRemove.getAtk());
         chara.getContent().setDef(chara.getContent().getDef() - toRemove.getDef());
@@ -64,9 +80,9 @@ public class EquipmentHelper {
     }
     
     public static void refreshAdditional() {
-        addAtk = weapon.getAtk() + helmet.getAtk() + bodyArmor.getAtk();
-        addDef = weapon.getDef() + helmet.getDef() + bodyArmor.getDef();
-        addHP = weapon.getHP() + helmet.getHP() + bodyArmor.getHP();
+        addAtk = weapon.getAtk() + helmet.getAtk() + bodyArmor.getAtk() + boots.getAtk() + shield.getAtk();
+        addDef = weapon.getDef() + helmet.getDef() + bodyArmor.getDef() + boots.getDef() + shield.getDef();
+        addHP = weapon.getHP() + helmet.getHP() + bodyArmor.getHP() + boots.getHP() + shield.getHP();
     }
     
     public static void updateStats(Point chara) {

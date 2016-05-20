@@ -9,15 +9,19 @@ package dungeonfactory;
  *
  * @author Seth, Icon, Marco
  */
-public class ArmorOne extends Item{
+public class ArmorFive extends Item{
     
+
     @Override
     public void setStats() {
-        super.name = "Iron Armor";
-        super.description = "Standard Iron Armor";
+        super.name = "Awesome Cape";
+        super.description = "Yes! Just the Cape! You feel more powerful wearing this! Yep, literally just the cape";
         super.type = "Armor";
-        super.atk = 0;
-        super.def= 1;
+        super.atk = 15;
+        super.def= 0;
         super.hp = 5;
+        
     }
+    
+    
 }

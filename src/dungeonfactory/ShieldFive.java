@@ -9,15 +9,15 @@ package dungeonfactory;
  *
  * @author Seth, Icon, Marco
  */
-public class ArmorOne extends Item{
+public class ShieldFive extends Item{
     
     @Override
     public void setStats() {
-        super.name = "Iron Armor";
-        super.description = "Standard Iron Armor";
-        super.type = "Armor";
+        super.name = "Blessed Day Shield";
+        super.description = "Commissioned by Princess Celestia during the fight against Discord";
+        super.type = "Shield";
         super.atk = 0;
-        super.def= 1;
-        super.hp = 5;
+        super.def= 9;
+        super.hp = 15;
     }
 }

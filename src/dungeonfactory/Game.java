@@ -64,11 +64,13 @@ public class Game extends JFrame implements Observer {
     JLabel def = new JLabel(" Def: " + map.getCharacter().getContent().getDef());
     JLabel atk = new JLabel(" Atk: " + map.getCharacter().getContent().getAtk());
     JLabel wep = new JLabel("<html><body>\' Weapon:  <br>- " + EquipmentHelper.getWep() + "</body></html>");
+    JLabel shield = new JLabel("<html><body>\' Shield:  <br>- " + EquipmentHelper.getShield() + "</body></html>");
     JLabel helm = new JLabel("<html><body>\' Helmet: <br>- " + EquipmentHelper.getHelm() + "</body></html>");
     JLabel armor = new JLabel("<html><body>\' Armor: <br>- " + EquipmentHelper.getArmor() + "</body></html>");
-    
+    JLabel boots = new JLabel("<html><body>\' Boots:  <br>- " + EquipmentHelper.getBoots() + "</body></html>");
     
     JButton inventoryB = new JButton("Inventory");
+    JButton toMap = new JButton("To Map");
     
     Entity leave = new Entity('_', false, true);
     
@@ -113,6 +115,13 @@ public class Game extends JFrame implements Observer {
             }
         }
         );
+        
+        toMap.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                toInventory();
+            }
+        });
+        
         menu.add(inventoryB);
         menu.add(new JLabel(" "));
         menu.add(new JLabel(" Stats"));
@@ -123,11 +132,15 @@ public class Game extends JFrame implements Observer {
         menu.add(new JLabel(" Equipment"));
         menu.add(wep);
         menu.add(new JLabel(" "));
+        menu.add(shield);
+        menu.add(new JLabel(" "));
         menu.add(helm);
         menu.add(new JLabel(" "));
         menu.add(armor);
+        menu.add(new JLabel(" "));
+        menu.add(boots);
         
-        //inventoryMenu.add(inventoryB, BorderLayout.NORTH);
+        inventoryMenu.add(toMap, BorderLayout.NORTH);
         
         
         JButton selectNextItem = new JButton("Next");
@@ -156,7 +169,11 @@ public class Game extends JFrame implements Observer {
                Inventory.removeItem(selectedItem);
                Inventory.update(11);
                
-            
+               wep.setText("<html><body>\' Weapon:  <br>- " + EquipmentHelper.getWep() + "</body></html>");
+               shield.setText("<html><body>\' Shield:  <br>- " + EquipmentHelper.getShield() + "</body></html>");
+               helm.setText("<html><body>\' Helmet: <br>- " + EquipmentHelper.getHelm() + "</body></html>");
+               armor.setText("<html><body>\' Armor: <br>- " + EquipmentHelper.getArmor() + "</body></html>");
+               boots.setText("<html><body>\' Boots: <br>- " + EquipmentHelper.getBoots() + "</body></html>");
            }
         });
         inventoryMenu.add(equipItem, BorderLayout.CENTER);
@@ -300,9 +317,10 @@ public class Game extends JFrame implements Observer {
         mapHUD.removeAll();
         for (int i = 0; i < cols; i++){
             for(int j = 0; j < rows; j++) {
-                ImageIcon fill = loader.getImage(map.getMap()[i][j].getValue());
+                ImageIcon fill = loader.getImage(map.getH(), map.getV(),map.getMap()[i][j].getValue());
                 //JPanel toAdd = new MapImageHelper(fill);
-                JLabel toAdd = new JLabel(fill);
+                JLabel toAdd = new JLabel("nothing");
+                toAdd.setIcon(fill);
                 
                 mapHUD.add(toAdd);
             }  
@@ -313,9 +331,7 @@ public class Game extends JFrame implements Observer {
         HP.setText(" HP: " + map.getCharacter().getContent().getHp());
         def.setText(" Def: " + map.getCharacter().getContent().getDef());
         atk.setText(" Atk: " + map.getCharacter().getContent().getAtk());
-        wep.setText("<html><body>\' Weapon:  <br>- " + EquipmentHelper.getWep() + "</body></html>");
-        helm.setText("<html><body>\' Helmet: <br>- " + EquipmentHelper.getHelm() + "</body></html>");
-        armor.setText("<html><body>\' Armor: <br>- " + EquipmentHelper.getArmor() + "</body></html>");
+        
     }
     
     public static boolean inventoryPress = false;
@@ -330,7 +346,7 @@ public class Game extends JFrame implements Observer {
             Inventory.update(11);
             thing.add(inventory,BorderLayout.CENTER);
             
-            inventoryMenu.add(inventoryB, BorderLayout.NORTH);
+            
             thing.add(inventoryMenu, BorderLayout.WEST);
             
             inventIndex = 0;
@@ -355,7 +371,7 @@ public class Game extends JFrame implements Observer {
             localUpdate();
             
             
-            menu.add(inventoryB);
+            
             thing.add(menu, BorderLayout.WEST);
             
             

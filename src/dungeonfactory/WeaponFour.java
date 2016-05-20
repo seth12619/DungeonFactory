@@ -9,15 +9,19 @@ package dungeonfactory;
  *
  * @author Seth, Icon, Marco
  */
-public class ArmorOne extends Item{
+public class WeaponFour extends Item{
     
+
     @Override
     public void setStats() {
-        super.name = "Iron Armor";
-        super.description = "Standard Iron Armor";
-        super.type = "Armor";
-        super.atk = 0;
-        super.def= 1;
-        super.hp = 5;
+        super.name = "Steel Sabre";
+        super.description = "A royal guard's standard issue sabre. 100% steel alloy.";
+        super.type = "Weapon";
+        super.atk = 12;
+        super.def= 0;
+        super.hp = 7;
+        
     }
+    
+    
 }

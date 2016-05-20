@@ -9,15 +9,19 @@ package dungeonfactory;
  *
  * @author Seth, Icon, Marco
  */
-public class ArmorOne extends Item{
+public class ArmorFour extends Item{
     
+
     @Override
     public void setStats() {
-        super.name = "Iron Armor";
-        super.description = "Standard Iron Armor";
+        super.name = "Holy Royal Armor";
+        super.description = "From the royal treasurey. Said to be crafted from the stone that held the sword that chooses the king.";
         super.type = "Armor";
         super.atk = 0;
-        super.def= 1;
-        super.hp = 5;
+        super.def= 15;
+        super.hp = 20;
+        
     }
+    
+    
 }

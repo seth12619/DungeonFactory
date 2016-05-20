@@ -9,15 +9,16 @@ package dungeonfactory;
  *
  * @author Seth, Icon, Marco
  */
-public class ArmorOne extends Item{
+public class HelmetFive extends Item{
+   
     
     @Override
     public void setStats() {
-        super.name = "Iron Armor";
-        super.description = "Standard Iron Armor";
-        super.type = "Armor";
+        super.name = "Holy Crown";
+        super.description = "Emits a sacred aura that protects one from attacks";
+        super.type = "Helmet";
         super.atk = 0;
-        super.def= 1;
-        super.hp = 5;
+        super.def= 6;
+        super.hp = 10;
     }
 }
