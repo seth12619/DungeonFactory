@@ -51,6 +51,7 @@ public class Inventory {
         try {
         Actions.appendAction(" Item Selected: " + items.get(a).getName());
         Actions.appendAction(" Description: " + items.get(a).getDescription());
+        Actions.appendAction(" Type: " + items.get(a).getType());
         Actions.appendAction(" Atk: " + items.get(a).getAtk());
         Actions.appendAction(" Def: " + items.get(a).getDef());
         Actions.appendAction(" HP: " + items.get(a).getHP());

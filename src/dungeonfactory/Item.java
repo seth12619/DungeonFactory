@@ -14,33 +14,42 @@ import javax.swing.ImageIcon;
 public abstract class Item {
     String name = "No Item";
     String description = "What description";
+    String type = "newType Gundam";
     int atk = 0;
     int def = 0;
     int hp = 0;
     
+    public Item() {
+        setStats();
+    }
+
+    public abstract void setStats();
     
-    public String getName() {
+    
+    //The rest are stuff that everything has
+    public final String getName() {
         return name;
     }
     
-    public String getDescription() {
+    public final String getType() {
+        return type;
+    }
+    
+    public final String getDescription() {
         return description;
     }
     
-    public int getAtk() {
+    public final int getAtk() {
         return atk;
     }
     
-    public int getDef() {
+    public final int getDef() {
         return def;
     }
     
-    public int getHP(){
+    public final int getHP(){
         return hp;
     }
     
-    
-    public abstract int atk();
-    public abstract int def();
-    public abstract int hp();
+
 }

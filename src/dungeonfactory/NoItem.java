@@ -12,18 +12,15 @@ package dungeonfactory;
 public class NoItem extends Item {
 
     @Override
-    public int atk() {
-        return 0;
+    public void setStats() {
+        super.name = "None";
+        super.description = "None";
+        super.type = "N/A";
+        super.atk = 0;
+        super.def= 0;
+        super.hp = 0;
     }
 
-    @Override
-    public int def() {
-        return 0;
-    }
-
-    @Override
-    public int hp() {
-        return 0;
-    }
+ 
     
 }

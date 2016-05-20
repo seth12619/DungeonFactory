@@ -5,66 +5,22 @@
  */
 package dungeonfactory;
 
-import javax.swing.ImageIcon;
-
 /**
  *
  * @author Seth, Icon, Marco
  */
-public class ArmorTwo extends ItemDecorator{
-    Item item;
-    String name = "Steel Armor";
-    String description = "Standard Steel Armor";
-    int atk = 0;
-    int def = 2;
-    int hp = 7;
+public class ArmorTwo extends Item{
     
-    public ArmorTwo() {
+
+    @Override
+    public void setStats() {
+        super.name = "Steel Armor";
+        super.description = "Standard Steel Armor";
+        super.type = "Armor";
+        super.atk = 0;
+        super.def= 2;
+        super.hp = 7;
         
-    }
-
-    public ArmorTwo(ItemDecorator id) {
-        super(id);
-    }
-
-    @Override
-    public int atk() {
-        return item.getAtk() + atk;
-    }
-
-    @Override
-    public int def() {
-        return item.getDef() + def;
-    }
-
-    @Override
-    public int hp() {
-        return item.getHP() + hp;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-    
-    @Override
-    public String getDescription() {
-        return description;
-    }
-    
-    @Override
-    public int getAtk() {
-        return atk;
-    }
-    
-    @Override
-    public int getDef() {
-        return def;
-    }
-    
-    @Override
-    public int getHP(){
-        return hp;
     }
     
     
