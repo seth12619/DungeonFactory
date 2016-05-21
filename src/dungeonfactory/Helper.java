@@ -262,7 +262,7 @@ public class Helper{
             
             else
             {
-                System.out.println("You did not select a valid enemy type!");
+              //  System.out.println("You did not select a valid enemy type!");
                 answer = null;
             }
         }
@@ -308,7 +308,7 @@ public class Helper{
         Item temp = null;
         int range = (25 - 1) + 1;     
         int check = (int) ((Math.random() * range) +1);
-        System.out.println(check);
+       // System.out.println(check);
         if (check == 1)
         {
             temp =  new ArmorOne();
@@ -435,12 +435,12 @@ public class Helper{
         
         if(newX >= limitX || newY >= limitY || newX <0 || newY < 0)
         {
-            System.out.println("ERROR. YOU TRIED MOVING IT OUT OF BOUNDS!");
+           // System.out.println("ERROR. YOU TRIED MOVING IT OUT OF BOUNDS!");
         }
         
         else if (!map[newX][newY].isWalkable())
         {
-            System.out.println("ERROR. YOU TRIED MOVING INTO ANOTHER THING!");
+           // System.out.println("ERROR. YOU TRIED MOVING INTO ANOTHER THING!");
             
             if(map[newX][newY].isAttackable() && (coord.getContent().getAlign() != map[newX][newY].getAlign()))
             {

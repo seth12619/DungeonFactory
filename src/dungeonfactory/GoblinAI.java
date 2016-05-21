@@ -30,7 +30,7 @@ public class GoblinAI implements Behavior{
     
     @Override
     public void execute() {
-        System.out.println( me.getContent().getValue() + " did a thing!");
+     //   System.out.println( me.getContent().getValue() + " did a thing!");
         
         int myX = me.getX();
         int myY = me.getY();
