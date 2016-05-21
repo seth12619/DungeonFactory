@@ -117,14 +117,13 @@ public class Game extends JFrame implements Observer {
         });
         
         menu.add(inventoryB);
-        menu.add(new JLabel(" "));
         menu.add(highScore);
-        menu.add(new JLabel(" Stats"));
+        menu.add(new JLabel(" Stats:"));
         menu.add(atk);
         menu.add(HP);
         menu.add(def);
         menu.add(new JLabel(" "));
-        menu.add(new JLabel(" Equipment"));
+        menu.add(new JLabel(" Equipment:"));
         menu.add(wep);
         menu.add(new JLabel(" "));
         menu.add(shield);
