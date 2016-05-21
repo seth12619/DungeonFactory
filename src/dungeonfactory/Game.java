@@ -67,6 +67,7 @@ public class Game extends JFrame implements Observer {
     JLabel helm = new JLabel("<html><body>\' Helmet: <br>- " + EquipmentHelper.getHelm() + "</body></html>");
     JLabel armor = new JLabel("<html><body>\' Armor: <br>- " + EquipmentHelper.getArmor() + "</body></html>");
     JLabel boots = new JLabel("<html><body>\' Boots:  <br>- " + EquipmentHelper.getBoots() + "</body></html>");
+    JLabel highScore = new JLabel("<html><body>\' High Score: <br>- "+ Integer.toString(HighScore.getInstance().readHighScore()) + "</body></html>");
     
     JButton inventoryB = new JButton("Inventory");
     JButton toMap = new JButton("To Map");
@@ -87,7 +88,7 @@ public class Game extends JFrame implements Observer {
         
         menu.setLayout(menuLayout);
         
-        menu.setPreferredSize(new Dimension(100, 500));
+        menu.setPreferredSize(new Dimension(100, 800));
         menu.setMaximumSize(menu.getPreferredSize());
         
         
@@ -118,6 +119,7 @@ public class Game extends JFrame implements Observer {
         
         menu.add(inventoryB);
         menu.add(new JLabel(" "));
+        menu.add(highScore);
         menu.add(new JLabel(" Stats"));
         menu.add(atk);
         menu.add(HP);
@@ -133,6 +135,8 @@ public class Game extends JFrame implements Observer {
         menu.add(armor);
         menu.add(new JLabel(" "));
         menu.add(boots);
+        
+        
         
         inventoryMenu.add(toMap, BorderLayout.NORTH);
         
@@ -350,7 +354,7 @@ public class Game extends JFrame implements Observer {
         HP.setText(" HP: " + map.getCharacter().getContent().getHp());
         def.setText(" Def: " + map.getCharacter().getContent().getDef());
         atk.setText(" Atk: " + map.getCharacter().getContent().getAtk());
-        
+        highScore.setText("<html><body>\' High Score: <br>- "+ HighScore.getInstance().readHighScore() + "</body></html>");
     }
     
     public static boolean inventoryPress = false;
