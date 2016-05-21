@@ -69,6 +69,7 @@ public class Game extends JFrame implements Observer {
     JLabel armor = new JLabel("<html><body>\' Armor: <br>- " + EquipmentHelper.getArmor() + "</body></html>");
     JLabel boots = new JLabel("<html><body>\' Boots:  <br>- " + EquipmentHelper.getBoots() + "</body></html>");
     JLabel highScore = new JLabel("<html><body>\' High Score: <br>- "+ Integer.toString(HighScore.getInstance().readHighScore()) + "</body></html>");
+    JLabel currScore = new JLabel("Score: " + Helper.getCurrScore());
     
     JButton inventoryB = new JButton("Inventory");
     JButton toMap = new JButton("To Map");
@@ -118,6 +119,7 @@ public class Game extends JFrame implements Observer {
         
         menu.add(inventoryB);
         menu.add(highScore);
+        menu.add(currScore);
         menu.add(new JLabel(" Stats:"));
         menu.add(atk);
         menu.add(HP);
@@ -369,6 +371,7 @@ public class Game extends JFrame implements Observer {
         def.setText(" Def: " + map.getCharacter().getContent().getDef());
         atk.setText(" Atk: " + map.getCharacter().getContent().getAtk());
         highScore.setText("<html><body>\' High Score: <br>- "+ HighScore.getInstance().readHighScore() + "</body></html>");
+        currScore.setText("Score: " + Helper.getCurrScore());
     }
     
     public static boolean inventoryPress = false;

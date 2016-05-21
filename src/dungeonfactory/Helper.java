@@ -95,6 +95,10 @@ public class Helper{
         return answer;
     }
     
+    public static int getCurrScore() {
+        return score;
+    }
+    
     static int score = 0;
     public static void attack(Entity attacker, Entity defender, Map level)
     {
