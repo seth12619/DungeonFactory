@@ -43,16 +43,16 @@ public class Map {
         
         if (level == 1)
         {
-            
-            l = LevelFour.getUL();
-            m = LevelFour.getUR();
-            n = LevelFour.getLR();
-            o = LevelFour.getLL();
             /*
+            l = LevelSix.getUL();
+            m = LevelSix.getUR();
+            n = LevelSix.getLR();
+            o = LevelSix.getLL();
+            */
             l = LevelOne.getUL();
             m = LevelOne.getUR();
             n = LevelOne.getLR();
-            o = LevelOne.getLL();*/
+            o = LevelOne.getLL();
             
         } 
         else if (level == 2) {
@@ -72,6 +72,18 @@ public class Map {
             m = LevelFour.getUR();
             n = LevelFour.getLR();
             o = LevelFour.getLL();
+        }
+        else if (level == 5) {
+            l = LevelFive.getUL();
+            m = LevelFive.getUR();
+            n = LevelFive.getLR();
+            o = LevelFive.getLL();
+        }
+        else if (level == 6) {
+            l = LevelSix.getUL();
+            m = LevelSix.getUR();
+            n = LevelSix.getLR();
+            o = LevelSix.getLL();
         }
         else if (level == 7)
         {
