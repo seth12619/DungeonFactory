@@ -54,8 +54,7 @@ public class ImageLoader {
             BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
             Graphics g = bi.createGraphics();
             switch(level) {
-                case 1: g.drawImage(img, 0, 45, 35, 30, null);
-                    //g.drawImage(img, 0, 30, 62, 55, null);
+                case 1: g.drawImage(img, 0, 30, 62, 55, null);
                     break;
                 case 2: g.drawImage(img, 0, 40, 50, 45, null);
                     break;
