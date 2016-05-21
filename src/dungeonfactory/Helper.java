@@ -5,16 +5,21 @@
  */
 package dungeonfactory;
 
+import java.io.IOException;
 import static java.lang.Math.abs;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author mnmkami
  */
 public class Helper{
+    
+    
     public Helper(){}
     
     public static boolean lineSight(Point one, Point two, Map level)
@@ -90,8 +95,11 @@ public class Helper{
         return answer;
     }
     
+    static int score = 0;
     public static void attack(Entity attacker, Entity defender, Map level)
     {
+        
+        
         Entity[][] map = level.getMap();
         ArrayList<Executable> queue = level.getQueue();
         int attack = attacker.getAtk();
@@ -113,6 +121,12 @@ public class Helper{
                     System.out.println("HP: " + attacker.getHp());
                     System.out.println("Atk: " + attacker.getAtk());
                     System.out.println("Def: " + attacker.getDef());
+                    if(attacker.getValue()=='C') {
+                        score++;
+                        if(HighScore.getInstance().readHighScore()<score) {
+                            HighScore.getInstance().noteDownHighScore(score);
+                        }
+                    }
             }
         }
         else
