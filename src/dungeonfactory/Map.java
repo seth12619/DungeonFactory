@@ -44,10 +44,10 @@ public class Map {
         if (level == 1)
         {
             
-            l = LevelThree.getUL();
-            m = LevelThree.getUR();
-            n = LevelThree.getLR();
-            o = LevelThree.getLL();
+            l = LevelFour.getUL();
+            m = LevelFour.getUR();
+            n = LevelFour.getLR();
+            o = LevelFour.getLL();
             /*
             l = LevelOne.getUL();
             m = LevelOne.getUR();
@@ -66,6 +66,12 @@ public class Map {
             m = LevelThree.getUR();
             n = LevelThree.getLR();
             o = LevelThree.getLL();
+        }
+        else if (level == 4) {
+            l = LevelFour.getUL();
+            m = LevelFour.getUR();
+            n = LevelFour.getLR();
+            o = LevelFour.getLL();
         }
         else if (level == 7)
         {
