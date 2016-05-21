@@ -32,10 +32,10 @@ public class ImageLoader {
                 case '-': image = new ImageIcon("src/dungeonfactory/Graphics/Wall.png");
                     break;
                 case 'S': image = new ImageIcon("src/dungeonfactory/Graphics/Stairs.png");
-                    ifDungeonPart = true;
+                    ifCharacter = true;
                     break;
                 case 'T': image = new ImageIcon("src/dungeonfactory/Graphics/Chest.png");
-                    ifDungeonPart = true;
+                    ifCharacter = true;
                     break;
                 case 'B': image = new ImageIcon("src/dungeonfactory/Graphics/Bird_Down (F).png");
                     ifCharacter = true;
@@ -43,7 +43,7 @@ public class ImageLoader {
                 case 'W': image = new ImageIcon("src/dungeonfactory/Graphics/EnemyMage.png");
                     ifCharacter = true;
                     break;
-                case 'Z': image = new ImageIcon("src/dungeonfactory/Graphics/Bird_Left.png");
+                case 'Z': image = new ImageIcon("src/dungeonfactory/Graphics/Dragon.png");
                     ifCharacter = true;
                     break;
                 default: image = new ImageIcon("src/dungeonfactory/Images/stubGr.png");
@@ -54,7 +54,18 @@ public class ImageLoader {
             BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
             Graphics g = bi.createGraphics();
             switch(level) {
-                case 1: g.drawImage(img, 0, 30, 70, 55, null);
+                case 1: g.drawImage(img, 0, 42, 45, 37, null);
+                    //g.drawImage(img, 0, 30, 70, 55, null);
+                    break;
+                case 2:g.drawImage(img, 0, 40, 50, 45, null);
+                    break;
+                case 3:g.drawImage(img, 0, 42, 45, 37, null);
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
                     break;
                 case 7: g.drawImage(img, 0, 47, 28, 23, null);
                     break;
@@ -63,21 +74,8 @@ public class ImageLoader {
             } 
         //g.drawImage(img, 0, 25, 82, 70, null);  //values to be changed (img, distFromLeft, distanceFromAbove, Width, Height, null) //do not change the rest
             image = new ImageIcon(bi); 
-        } else if(ifDungeonPart) { //CHEST & STAIRS
-            Image img = image.getImage();
-            BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-            Graphics g = bi.createGraphics();
-            switch(level) {
-                case 1: g.drawImage(img, 0, 40, 70, 65, null);
-                    break;
-                case 7: g.drawImage(img, 0, 65, 28, 23, null);
-                    break;
-                default: g.drawImage(img, 0, 25, 120, 120, null);
-                    break;
-            } 
+        } 
        
-            image = new ImageIcon(bi);     
-        }
         return image;
 
     }
