@@ -136,7 +136,18 @@ public class Helper{
                     System.out.println("Atk: " + attacker.getAtk());
                     System.out.println("Def: " + attacker.getDef());
                     if(attacker.getValue()=='C') {
-                        score++;
+                        switch(defender.getValue()) {
+                            case 'Z': score += 500;
+                                break;
+                            case 'E': score += 20;
+                                break;
+                            case 'B': score += 15;
+                                break;
+                            case 'W': score += 50;
+                                break;
+                            default: score++;
+                                break;
+                        }
                         if(HighScore.getInstance().readHighScore()<score) {
                             HighScore.getInstance().noteDownHighScore(score);
                         }
