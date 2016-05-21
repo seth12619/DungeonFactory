@@ -56,7 +56,6 @@ public class Game extends JFrame implements Observer {
     ImageLoader loader = new ImageLoader();
     
     boolean inMenu = false;
-    
     JPanel menu = new JPanel(); //default starting menu
     JPanel inventoryMenu = new JPanel(); //When in Inventory mode Menu
     
@@ -83,11 +82,6 @@ public class Game extends JFrame implements Observer {
         //Helper obsHelp = new Helper();
         
        //Test Item adding
-       Item a = new ArmorOne();
-       Item b = new ArmorTwo();
-        
-       Inventory.addItem(a);
-       Inventory.addItem(b);
        
         BoxLayout menuLayout = new BoxLayout(menu, BoxLayout.Y_AXIS);
         
@@ -221,24 +215,48 @@ public class Game extends JFrame implements Observer {
                     {
                         if (e.getKeyCode() == KeyEvent.VK_W)
                         {
+                            if(Helper.checkChest(map, map.character.getX()-1, map.character.getY()))
+                            {
+                                Item temp = Helper.takeChest(map,map.character.getX()-1, map.character.getY());
+                                Actions.appendAction("You got a " + temp.getName() + " from the chest!");
+                                Inventory.addItem(temp);
+                            }
                             Helper.moveEntity( map.getCharacter(), -1, 0, map);
                             localUpdate();
                         }
 
                         else if (e.getKeyCode() == KeyEvent.VK_S)
                         {
+                            if(Helper.checkChest(map, map.character.getX()+1, map.character.getY()))
+                            {
+                                Item temp = Helper.takeChest(map,map.character.getX()+1, map.character.getY());
+                                Actions.appendAction("You got a " + temp.getName() + " from the chest!");
+                                Inventory.addItem(temp);
+                            }
                             Helper.moveEntity( map.getCharacter(), 1, 0, map);
                             localUpdate();
                         }
 
                         else if (e.getKeyCode() == KeyEvent.VK_A)
                         {
+                            if(Helper.checkChest(map, map.character.getX(), map.character.getY()-1))
+                            {
+                                Item temp = Helper.takeChest(map,map.character.getX(), map.character.getY()-1);
+                                Actions.appendAction("You got a " + temp.getName() + " from the chest!");
+                                Inventory.addItem(temp);
+                            }
                             Helper.moveEntity( map.getCharacter(), 0, -1, map);
                             localUpdate();
                         }
 
                         else if (e.getKeyCode() == KeyEvent.VK_D)
                         {
+                            if(Helper.checkChest(map, map.character.getX(), map.character.getY()+1))
+                            {
+                                Item temp = Helper.takeChest(map,map.character.getX(), map.character.getY()+1);
+                                Actions.appendAction("You got a " + temp.getName() + " from the chest!");
+                                Inventory.addItem(temp);
+                            }
                             Helper.moveEntity( map.getCharacter(), 0, 1, map);
                             localUpdate();
                         }

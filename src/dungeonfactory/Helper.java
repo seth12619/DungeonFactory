@@ -249,19 +249,22 @@ public class Helper{
         }
     }
     
-    public static boolean checkChest (Map level)
+    public static boolean checkChest (Map level, int x, int y)
     {
-        if (level.getCharacter().getX() == level.getChest().getX() && level.getCharacter().getY() == level.getChest().getY())
+        if (level.getMap()[x][y].getValue() == 'T')
         {
+            System.out.println("True Chest");
             return true;
         }
+        
         else
         {
+            System.out.println("False Chest");
             return false;
         }
     }
     
-    public static Item takeChest()
+    public static Item takeChest(Map level, int x, int y)
     {
         Item temp = null;
         int range = (25 - 1) + 1;     
@@ -368,7 +371,7 @@ public class Helper{
         {
             temp = new WeaponFive();
         }
-        
+        level.getMap()[x][y] = new Entity('_',false,true);
         return temp;
     }
     
