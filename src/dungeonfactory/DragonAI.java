@@ -20,6 +20,7 @@ public class DragonAI implements Behavior{
     private ArrayList<Executable> queue;
     private Map level;
     boolean buffed = false;
+    boolean enraged = false;
     public DragonAI (Point character, Point me, Map level)
     {
         this.map = level.getMap();
@@ -40,9 +41,17 @@ public class DragonAI implements Behavior{
         if(abs(myX-hisX) <=1 && abs(myY-hisY) <=1 && buffed == false && abs(myX-hisX) != abs(myY-hisY) )
         {
             System.out.println("I AM BUFFED, MORTAL.");
-            me.getContent().setAtk(me.getContent().getAtk() + 1);
+            me.getContent().setDef(me.getContent().getDef() + 0);
             buffed = true;
         }
+        
+        if(me.getContent().getHp() < 100 && enraged == false)
+        {
+            me.getContent().setAtk(me.getContent().getAtk() + 5);
+            me.getContent().setDef(me.getContent().getDef() + 5);
+            enraged = true;
+        }
+        
         if(((myX == hisX && abs(myY-hisY) <=3) || ((myY == hisY && abs(myX-hisX) <=3))) && Helper.lineSight(me, character, level))
         {
             Helper.attack(me.getContent(), character.getContent(), level);

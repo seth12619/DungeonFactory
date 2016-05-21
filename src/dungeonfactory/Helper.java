@@ -105,12 +105,22 @@ public class Helper{
         int attack = attacker.getAtk();
         int defense = defender.getDef();
         int damage = attack - defense/2;
+        
+        if (damage < 0)
+        {
+            damage = 1;
+        }
         int health = defender.getHp() - damage;
+
         if (health <= 0)
         {
             if(defender.getValue() == 'C')
             {
                  System.out.println("You died!");
+                 score = score + level.character.getContent().getHp() * 10 + level.character.getContent().getAtk() * 15 + level.character.getContent().getDef()*5;
+                        if(HighScore.getInstance().readHighScore()<score) {
+                            HighScore.getInstance().noteDownHighScore(score);
+                        }
                 System.exit(1);
             }
             else
@@ -177,7 +187,7 @@ public class Helper{
         Entity me;
             if (floor == 1)
             {
-                 me = new Entity('C', true, false, 50, 4, 0, 1);
+                 me = new Entity('C', true, false, 50, 5, 1, 1);
             }
             
             else
@@ -190,7 +200,7 @@ public class Helper{
         return answer;
     }
     
-    public static Executable enemyMaker(char type, int locX, int locY, Map level)
+    public static Executable enemyMaker(char type, int locX, int locY, Map level, int floor)
     {   
         Point character = level.getCharacter();
         Entity[][] map = level.getMap();
@@ -201,7 +211,7 @@ public class Helper{
             
             if (type == 'E')
             {
-                Entity me = new Entity (type,true, false, 10, 2, 0, 2);
+                Entity me = new Entity (type,true, false, 10 + 3*(floor-1), (int) (2 + 1*(floor-1)), 0+1*(floor-1), 2);
                 map[locX][locY] = me;
                 Point myLoc = new Point(locX,locY,me);
                 GoblinAI myAI = new GoblinAI(character, myLoc, level);
@@ -210,7 +220,7 @@ public class Helper{
             
             else if (type == 'B')
             {
-                Entity me = new Entity (type,true, false, 5, 3, 0, 2);
+                Entity me = new Entity (type,true, false, 5 + 2*(floor-1), 3 + 1*(floor-1), (int) (0+0.5*(floor-1)), 2);
                 map[locX][locY] = me;
                 Point myLoc = new Point(locX,locY,me);
                 BirdAI myAI = new BirdAI(character, myLoc, level);
@@ -219,7 +229,7 @@ public class Helper{
             
             else if (type == 'W')
             {
-                Entity me = new Entity (type,true, false, 4, 3, 0, 2);
+                Entity me = new Entity (type,true, false, (int) (4 + 1.5 * (floor-1)), 3 + 2 * (floor-1), 0, 2);
                 map[locX][locY] = me;
                 Point myLoc = new Point(locX,locY,me);
                 WizardAI myAI = new WizardAI(character, myLoc, level);
@@ -228,7 +238,7 @@ public class Helper{
             
             else if (type == 'Z')
             {
-                Entity me = new Entity (type,true, false, 40, 4, 0, 2);
+                Entity me = new Entity (type,true, false, 250, 15, 4, 2);
                 map[locX][locY] = me;
                 Point myLoc = new Point(locX,locY,me);
                 DragonAI myAI = new DragonAI(character, myLoc, level);
@@ -263,7 +273,7 @@ public class Helper{
         }
     }
     
-    public static boolean checkChest (Map level, int x, int y)
+    public static boolean checkChest (Map level, int x, int y) 
     {
         if (level.getMap()[x][y].getValue() == 'T')
         {
