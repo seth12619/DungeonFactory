@@ -94,11 +94,11 @@ public class Game extends JFrame implements Observer {
         menu.setMaximumSize(menu.getPreferredSize());
         
         print = Helper.getPrintable (map.getMap());
-        Helper.printMap(print);
-        System.out.println("-------------------------------");
+        //Helper.printMap(print);
+        //System.out.println("-------------------------------");
 
         print = Helper.getPrintable (map.getMap());
-        Helper.printMap(print);
+        //Helper.printMap(print);
         
 
         inventoryMenu.setLayout(new BorderLayout());
@@ -317,8 +317,8 @@ public class Game extends JFrame implements Observer {
                             Helper.doQueue(map.getQueue());
                         }
                         print = Helper.getPrintable (map.getMap());
-                        System.out.println("-------------------------------");
-                        Helper.printMap(print);
+                     //   System.out.println("-------------------------------");
+                      //  Helper.printMap(print);
                     }
                 }
             });
@@ -397,7 +397,7 @@ public class Game extends JFrame implements Observer {
             inventoryPress = true;
             
             
-            System.out.println("it is gonna add INVENTORY");
+           // System.out.println("it is gonna add INVENTORY");
             
           
         } else {
@@ -415,7 +415,7 @@ public class Game extends JFrame implements Observer {
             thing.add(menu, BorderLayout.WEST);
             
             
-            System.out.println("it is gonna add MAP");
+           // System.out.println("it is gonna add MAP");
             
             thing.add(mapHUD,BorderLayout.CENTER);
             thing.revalidate();

@@ -40,7 +40,9 @@ public class DragonAI implements Behavior{
         
         if(abs(myX-hisX) <=1 && abs(myY-hisY) <=1 && buffed == false && abs(myX-hisX) != abs(myY-hisY) )
         {
-            System.out.println("I AM BUFFED, MORTAL.");
+            Actions.appendAction("Dragon: MY SCALES ARE IRON!");
+            Actions.appendAction("Dragon: NOW DIE MORTAL!");
+          //  System.out.println("I AM BUFFED, MORTAL.");
             me.getContent().setDef(me.getContent().getDef() + 0);
             buffed = true;
         }

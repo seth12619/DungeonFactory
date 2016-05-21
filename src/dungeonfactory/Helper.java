@@ -131,10 +131,10 @@ public class Helper{
             {
                 Helper.killThis(defender, level);
                 Actions.appendAction(attacker.getValue() + " attacked " + defender.getValue() + " and killed it!");
-                 System.out.println(attacker.getValue() + " attacked " + defender.getValue() + " and killed it!");
-                    System.out.println("HP: " + attacker.getHp());
-                    System.out.println("Atk: " + attacker.getAtk());
-                    System.out.println("Def: " + attacker.getDef());
+               //  System.out.println(attacker.getValue() + " attacked " + defender.getValue() + " and killed it!");
+                   // System.out.println("HP: " + attacker.getHp());
+                   // System.out.println("Atk: " + attacker.getAtk());
+                   // System.out.println("Def: " + attacker.getDef());
                     if(attacker.getValue()=='C') {
                         switch(defender.getValue()) {
                             case 'Z': score += 500;
@@ -158,10 +158,10 @@ public class Helper{
         {
             defender.setHp(health);
             Actions.appendAction(attacker.getValue() + " attacked " + defender.getValue() + " and dealt " + damage + " damage!");
-            System.out.println(attacker.getValue() + " attacked " + defender.getValue() + " and dealt " + damage + " damage!");
-                System.out.println("HP: " + attacker.getHp());
-                System.out.println("Atk: " + attacker.getAtk());
-                System.out.println("Def: " + attacker.getDef());
+            //System.out.println(attacker.getValue() + " attacked " + defender.getValue() + " and dealt " + damage + " damage!");
+             //   System.out.println("HP: " + attacker.getHp());
+              //  System.out.println("Atk: " + attacker.getAtk());
+               // System.out.println("Def: " + attacker.getDef());
         }
     }
     
@@ -277,13 +277,13 @@ public class Helper{
     {
         if (level.getCharacter().getX() == level.getDoor().getX() && level.getCharacter().getY() == level.getDoor().getY())
         {
-            System.out.println("True Dicks");
+            //System.out.println("True Ponies");
             return true;
         }
         
         else
         {
-            System.out.println("False Dicks");
+            //System.out.println("Changeling!");
             return false;
         }
     }
@@ -292,13 +292,13 @@ public class Helper{
     {
         if (level.getMap()[x][y].getValue() == 'T')
         {
-            System.out.println("True Chest");
+          //  System.out.println("True Chest");
             return true;
         }
         
         else
         {
-            System.out.println("False Chest");
+          //  System.out.println("False Chest");
             return false;
         }
     }
