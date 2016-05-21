@@ -5,6 +5,7 @@
  */
 package dungeonfactory;
 
+import static dungeonfactory.Helper.score;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -219,11 +220,14 @@ public class Game extends JFrame implements Observer {
                     {
                         if (e.getKeyCode() == KeyEvent.VK_W)
                         {
-                            if(Helper.checkChest(map, map.character.getX()-1, map.character.getY()))
+                            if(map.character.getX() > 0)
                             {
-                                Item temp = Helper.takeChest(map,map.character.getX()-1, map.character.getY());
-                                Actions.appendAction("You got a " + temp.getName() + " from the chest!");
-                                Inventory.addItem(temp);
+                                if(Helper.checkChest(map, map.character.getX()-1, map.character.getY()))
+                                {
+                                    Item temp = Helper.takeChest(map,map.character.getX()-1, map.character.getY());
+                                    Actions.appendAction("You got a " + temp.getName() + " from the chest!");
+                                    Inventory.addItem(temp);
+                                }
                             }
                             Helper.moveEntity( map.getCharacter(), -1, 0, map);
                             localUpdate();
@@ -231,11 +235,14 @@ public class Game extends JFrame implements Observer {
 
                         else if (e.getKeyCode() == KeyEvent.VK_S)
                         {
-                            if(Helper.checkChest(map, map.character.getX()+1, map.character.getY()))
+                            if(map.character.getX() < rows-1)
                             {
-                                Item temp = Helper.takeChest(map,map.character.getX()+1, map.character.getY());
-                                Actions.appendAction("You got a " + temp.getName() + " from the chest!");
-                                Inventory.addItem(temp);
+                                if(Helper.checkChest(map, map.character.getX()+1, map.character.getY()))
+                                {
+                                    Item temp = Helper.takeChest(map,map.character.getX()+1, map.character.getY());
+                                    Actions.appendAction("You got a " + temp.getName() + " from the chest!");
+                                    Inventory.addItem(temp);
+                                }
                             }
                             Helper.moveEntity( map.getCharacter(), 1, 0, map);
                             localUpdate();
@@ -243,11 +250,14 @@ public class Game extends JFrame implements Observer {
 
                         else if (e.getKeyCode() == KeyEvent.VK_A)
                         {
-                            if(Helper.checkChest(map, map.character.getX(), map.character.getY()-1))
+                            if(map.character.getY() > 0)
                             {
-                                Item temp = Helper.takeChest(map,map.character.getX(), map.character.getY()-1);
-                                Actions.appendAction("You got a " + temp.getName() + " from the chest!");
-                                Inventory.addItem(temp);
+                                if(Helper.checkChest(map, map.character.getX(), map.character.getY()-1))
+                                {
+                                    Item temp = Helper.takeChest(map,map.character.getX(), map.character.getY()-1);
+                                    Actions.appendAction("You got a " + temp.getName() + " from the chest!");
+                                    Inventory.addItem(temp);
+                                }
                             }
                             Helper.moveEntity( map.getCharacter(), 0, -1, map);
                             localUpdate();
@@ -255,11 +265,14 @@ public class Game extends JFrame implements Observer {
 
                         else if (e.getKeyCode() == KeyEvent.VK_D)
                         {
-                            if(Helper.checkChest(map, map.character.getX(), map.character.getY()+1))
+                            if(map.character.getY() < rows-1)
                             {
-                                Item temp = Helper.takeChest(map,map.character.getX(), map.character.getY()+1);
-                                Actions.appendAction("You got a " + temp.getName() + " from the chest!");
-                                Inventory.addItem(temp);
+                                if(Helper.checkChest(map, map.character.getX(), map.character.getY()+1))
+                                {
+                                    Item temp = Helper.takeChest(map,map.character.getX(), map.character.getY()+1);
+                                    Actions.appendAction("You got a " + temp.getName() + " from the chest!");
+                                    Inventory.addItem(temp);
+                                }
                             }
                             Helper.moveEntity( map.getCharacter(), 0, 1, map);
                             localUpdate();
@@ -278,6 +291,10 @@ public class Game extends JFrame implements Observer {
                             if (currFloor == 8)
                             {
                                 //insert code that prints a score and a "you've won" screen
+                                score = score + map.character.getContent().getHp() * 10 + map.character.getContent().getAtk() * 15 + map.character.getContent().getDef()*5;
+                                if(HighScore.getInstance().readHighScore()<score) {
+                                    HighScore.getInstance().noteDownHighScore(score);
+                                }
                                 System.out.println("You've won!");
                                 System.exit(1);
                             }
@@ -308,7 +325,7 @@ public class Game extends JFrame implements Observer {
             });
         
         JPanel text = Actions.createTextArea();
-        
+        //Actions.appendAction("You are a Mighty Freelancer! You may equip ANYTHING! Yes, even if it occuppies the same slot! These dungeon items are magical! They inherit the power of ALL previously equipped  items. Keep equipping. You'll need it!");
         JPanel inventory = Inventory.createInventoryPanel();
         
         

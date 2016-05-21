@@ -31,6 +31,8 @@ public class Map {
     char[][]h = new char[][] { {'-','C','_'}, {'-','_','_'}, {'-','-','-'}};
     char[][]g = new char[][] { {'_','T','-'}, {'_','D','-'}, {'-','-','-'}};
     char[][]f = new char[][] { {'-','-','-'}, {'_','_','-'}, {'_','_','-'}};
+    
+    
     public Map(Game game, int level)
     {
         
@@ -41,13 +43,13 @@ public class Map {
         
         if (level == 1)
         {
-            l = e;
-            m = f;
-            n = g;
-            o = h;
+            l = LevelOne.getUL();
+            m = LevelOne.getUR();
+            n = LevelOne.getLR();
+            o = LevelOne.getLL();
         }
         
-        else if (level == 2)
+        else if (level == 7)
         {
             l = a;
             m = b;
@@ -64,7 +66,9 @@ public class Map {
         }
         
         this.sizeV = l.length*2;
+        System.out.println(sizeV);
         this.sizeH = l[0].length*2;
+        System.out.println(sizeH);
         
         char[][] input = new char[sizeV][sizeH];
         for (int p = 0; p < sizeV; p++)
@@ -113,7 +117,7 @@ public class Map {
                 {
                     map[i][j] = new Entity ('_', false, true);
                 }
-                
+                    
                 else if (input[i][j] == '-')
                 {
                     map[i][j] = new Entity ('-', false, false);
@@ -136,25 +140,25 @@ public class Map {
                 }
                 else if (input[i][j] == 'E')
                 {
-                    Executable stubA = Helper.enemyMaker('E', i, j, this);
+                    Executable stubA = Helper.enemyMaker('E', i, j, this,game.currFloor);
                     stubA.addObserver(game);
                 }
                 
                 else if (input[i][j] == 'B')
                 {
-                    Executable stubA = Helper.enemyMaker('B', i, j, this);
+                    Executable stubA = Helper.enemyMaker('B', i, j, this,game.currFloor);
                     stubA.addObserver(game);
                 }
                 
                 else if (input[i][j] == 'W')
                 {
-                    Executable stubA = Helper.enemyMaker('W', i, j, this);
+                    Executable stubA = Helper.enemyMaker('W', i, j, this,game.currFloor);
                     stubA.addObserver(game);
                 }
                 
                 else if (input[i][j] == 'Z')
                 {
-                    Executable stubA = Helper.enemyMaker('Z', i, j, this);
+                    Executable stubA = Helper.enemyMaker('Z', i, j, this,game.currFloor);
                     stubA.addObserver(game);
                 }
                 
