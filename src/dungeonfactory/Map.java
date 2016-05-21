@@ -43,18 +43,25 @@ public class Map {
         
         if (level == 1)
         {
+            /*
+            l = LevelSeven.getUL();
+            m = LevelSeven.getUR();
+            n = LevelSeven.getLR();
+            o = LevelSeven.getLL();
+            */
             l = LevelOne.getUL();
             m = LevelOne.getUR();
             n = LevelOne.getLR();
             o = LevelOne.getLL();
+            
         }
         
         else if (level == 7)
         {
-            l = a;
-            m = b;
-            n = c;
-            o = d;
+            l = LevelSeven.getUL();
+            m = LevelSeven.getUR();
+            n = LevelSeven.getLR();
+            o = LevelSeven.getLL();
         }
         
         else

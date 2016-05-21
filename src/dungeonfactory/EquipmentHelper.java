@@ -86,8 +86,8 @@ public class EquipmentHelper {
     }
     
     public static void updateStats(Point chara) {
-        chara.getContent().setAtk(chara.getContent().getAtk() + addAtk);
-        chara.getContent().setDef(chara.getContent().getDef() + addDef);
+        chara.getContent().setAtk(5 + addAtk);
+        chara.getContent().setDef(5 + addDef);
         chara.getContent().setHp(chara.getContent().getHp() + addHP);
     }
     

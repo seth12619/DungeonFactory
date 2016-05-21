@@ -92,8 +92,6 @@ public class Game extends JFrame implements Observer {
         menu.setPreferredSize(new Dimension(100, 800));
         menu.setMaximumSize(menu.getPreferredSize());
         
-        
-        
         print = Helper.getPrintable (map.getMap());
         Helper.printMap(print);
         System.out.println("-------------------------------");
@@ -357,7 +355,7 @@ public class Game extends JFrame implements Observer {
         mapHUD.removeAll();
         for (int i = 0; i < cols; i++){
             for(int j = 0; j < rows; j++) {
-                ImageIcon fill = loader.getImage(map.getH(), map.getV(),map.getMap()[i][j].getValue());
+                ImageIcon fill = loader.getImage(currFloor,map.getMap()[i][j].getValue());
                 //JPanel toAdd = new MapImageHelper(fill);
                 JLabel toAdd = new JLabel("nothing");
                 toAdd.setIcon(fill);
