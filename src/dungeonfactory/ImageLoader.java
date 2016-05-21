@@ -43,7 +43,7 @@ public class ImageLoader {
                 case 'W': image = new ImageIcon("src/dungeonfactory/Graphics/EnemyMage.png");
                     ifCharacter = true;
                     break;
-                case 'Z': image = new ImageIcon("src/dungeonfactory/Graphics/Bird_Left.png");
+                case 'Z': image = new ImageIcon("src/dungeonfactory/Graphics/Dragon.png");
                     ifCharacter = true;
                     break;
                 default: image = new ImageIcon("src/dungeonfactory/Images/stubGr.png");
@@ -54,12 +54,12 @@ public class ImageLoader {
             BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
             Graphics g = bi.createGraphics();
             switch(level) {
-                case 1: g.drawImage(img, 0, 40, 50, 45, null);
+                case 1: g.drawImage(img, 0, 42, 45, 37, null);
                     //g.drawImage(img, 0, 30, 70, 55, null);
                     break;
                 case 2:g.drawImage(img, 0, 40, 50, 45, null);
                     break;
-                case 3:
+                case 3:g.drawImage(img, 0, 42, 45, 37, null);
                     break;
                 case 4:
                     break;

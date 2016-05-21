@@ -44,21 +44,28 @@ public class Map {
         if (level == 1)
         {
             
-            l = LevelTwo.getUL();
-            m = LevelTwo.getUR();
-            n = LevelTwo.getLR();
-            o = LevelTwo.getLL();
+            l = LevelThree.getUL();
+            m = LevelThree.getUR();
+            n = LevelThree.getLR();
+            o = LevelThree.getLL();
             /*
             l = LevelOne.getUL();
             m = LevelOne.getUR();
             n = LevelOne.getLR();
             o = LevelOne.getLL();*/
             
-        } else if (level == 2) {
+        } 
+        else if (level == 2) {
             l = LevelTwo.getUL();
             m = LevelTwo.getUR();
             n = LevelTwo.getLR();
             o = LevelTwo.getLL();
+        }    
+        else if (level == 3) {
+            l = LevelThree.getUL();
+            m = LevelThree.getUR();
+            n = LevelThree.getLR();
+            o = LevelThree.getLL();
         }
         else if (level == 7)
         {
