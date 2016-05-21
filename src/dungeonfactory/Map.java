@@ -44,15 +44,10 @@ public class Map {
         if (level == 1)
         {
             
-            l = LevelFour.getUL();
-            m = LevelFour.getUR();
-            n = LevelFour.getLR();
-            o = LevelFour.getLL();
-            /*
             l = LevelOne.getUL();
             m = LevelOne.getUR();
             n = LevelOne.getLR();
-            o = LevelOne.getLL();*/
+            o = LevelOne.getLL();
             
         } 
         else if (level == 2) {
