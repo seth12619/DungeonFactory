@@ -124,7 +124,6 @@ public class Game extends JFrame implements Observer {
         menu.add(atk);
         menu.add(HP);
         menu.add(def);
-        menu.add(new JLabel(" "));
         menu.add(new JLabel(" Equipment:"));
         menu.add(wep);
         menu.add(new JLabel(" "));
